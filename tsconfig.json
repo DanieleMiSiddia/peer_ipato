@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    /* --- CONFIGURAZIONE BASE --- */
+    "target": "es2016",                                  /* Versione di JavaScript generata. ES2016 è molto compatibile. */
+    "module": "commonjs",                                /* Standard per Node.js. Permette di usare require/module.exports e import/export. */
+    "moduleResolution": "node",                          /* Aiuta TS a trovare i moduli dentro node_modules. */
+    "esModuleInterop": true,                             /* FONDAMENTALE: Permette di importare pacchetti CommonJS (come Express) con 'import'. */
+    "forceConsistentCasingInFileNames": true,            /* Assicura che i nomi dei file rispettino maiuscole/minuscole. */
+    "strict": true,                                      /* Attiva tutti i controlli di sicurezza rigorosi. */
+    "skipLibCheck": true,                                /* Velocizza la compilazione saltando il controllo dei file di definizione delle librerie (.d.ts). */
+
+    /* --- GESTIONE CARTELLE --- */
+    "rootDir": "./src",                                  /* Dove sta il tuo codice sorgente TypeScript. */
+    "outDir": "./dist",                                  /* Dove finirà il codice JavaScript compilato. */
+    
+    /* --- UTILITÀ --- */
+    "resolveJsonModule": true,                           /* Ti permette di importare file .json nel codice. */
+    "sourceMap": true                                    /* Crea file .map utili per il debug. */
+  },
+  "include": ["src/**/*"],                               /* Compila tutto ciò che è dentro src. */
+  "exclude": ["node_modules", "**/*.test.ts"]            /* Ignora le librerie e i test. */
+}

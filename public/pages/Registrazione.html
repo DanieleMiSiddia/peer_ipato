@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peer-ipato - Registrazione</title>
+    <link rel="icon" href="/images/Logo.jpeg" type="image/jpeg">
+    <style>
+        /* -----------------------------------------------------------
+           RESET & BASE STYLES
+        ----------------------------------------------------------- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* Font stack Sans-Serif di base */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* -----------------------------------------------------------
+           HEADER
+        ----------------------------------------------------------- */
+        header {
+            background-color: #ffffff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Stile per l'immagine del Logo (Mantenuto) */
+        #header-logo {
+            height: 50px;
+            width: auto;
+            margin-right: 15px;
+        }
+
+        /* --- NUOVO STILE PER IL NOME (TESTO BICROMATICO) --- */
+        .brand-text {
+            /* Uso il font stack di base ma con peso elevato per look geometrico */
+            font-weight: 800; 
+            font-size: 2rem; /* Dimensione prominente */
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.5px; /* Leggero avvicinamento per un look più compatto */
+        }
+
+        .brand-peer {
+            color: #1B365D; /* Blu Notte: Professionalità e stabilità */
+        }
+
+        .brand-ipato {
+            color: #C59343; /* Oro/Ocra: Energia e valore */
+        }
+        /* -------------------------------------------------- */
+
+
+        .btn-support {
+            text-decoration: none;
+            color: #333;
+            background-color: #f0f0f0;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-support:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* -----------------------------------------------------------
+           MAIN
+        ----------------------------------------------------------- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .registration-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            margin-bottom: 30px;
+        }
+
+        .card-header h1 {
+            font-size: 1.8rem;
+            color: #111;
+            margin-bottom: 10px;
+        }
+
+        .card-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 20px;
+            row-gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            color: #333;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: #436A98;
+        }
+
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .password-wrapper input {
+            padding-right: 40px; 
+        }
+
+        .toggle-password-btn {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            transition: color 0.3s;
+        }
+
+        .toggle-password-btn:hover {
+            color: #436A98;
+        }
+
+        .toggle-password-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .btn-register {
+            grid-column: span 2;
+            margin-top: 20px;
+            background-color: #152a48;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .btn-register:hover {
+            background-color: #152a48;
+        }
+
+        .login-prompt {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-login {
+            background-color: #152a48;
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        .btn-login:hover {
+            background-color: #345278;
+        }
+
+        footer {
+            height: 60px;
+            background-color: #e9ecef;
+        }
+
+        /* -----------------------------------------------------------
+           MESSAGGI FEEDBACK
+        ----------------------------------------------------------- */
+        .form-message {
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .form-message.error {
+            background-color: #fde8e8;
+            color: #b91c1c;
+            border: 1px solid #f3b5b5;
+        }
+
+        .form-message.success {
+            background-color: #e8f5e9;
+            color: #1b5e20;
+            border: 1px solid #a5d6a7;
+        }
+
+        /* -----------------------------------------------------------
+           MEDIA QUERY (Mobile)
+        ----------------------------------------------------------- */
+        @media (max-width: 650px) {
+            header {
+                padding: 1rem;
+            }
+
+            #header-logo {
+                height: 40px;
+                margin-right: 10px;
+            }
+            
+            /* Ridimensiona il testo del brand su mobile */
+            .brand-text {
+                font-size: 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width, .btn-register {
+                grid-column: span 1;
+            }
+            .header-left {
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <img src="/images/Logo.jpeg" alt="Logo Peer-ipato" id="header-logo">
+            
+            <div class="brand-text">
+                <span class="brand-peer">Peer-</span><span class="brand-ipato">ipato</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="#" class="btn-support">Contatta supporto</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="registration-card">
+            
+            <div class="card-header">
+                <h1>Crea un nuovo account</h1>
+                <p>Compila il modulo per unirti alla nostra community scientifica.</p>
+            </div>
+
+            <form id="registrationForm">
+                <div class="form-grid">
+                    
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" name="nome" placeholder="Mario">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cognome">Cognome</label>
+                        <input type="text" id="cognome" name="cognome" placeholder="Rossi">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="email">E-mail Istituzionale</label>
+                        <input type="email" id="email" name="email" placeholder="mario.rossi@universita.it">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ruolo">Ruolo Principale</label>
+                        <select id="ruolo" name="ruolo">
+                            <option value="" disabled selected>Seleziona un ruolo...</option>
+                            <option value="Chair">Chair</option>
+                            <option value="Autore">Autore</option>
+                            <option value="Revisore">Revisore</option>
+                            <option value="Editore">Editore</option>
+                        </select>
+                        <small style="font-size: 0.7rem; color: #888; margin-top: 4px;">Il ruolo non potrà essere modificato...</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="competenze">Competenze e Topic</label>
+                        <input type="text" id="competenze" name="competenze" placeholder="Aggiungi topic...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" placeholder="password123">
+                            <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('password', this)" title="Mostra Password">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conf-password">Conferma Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="conf-password" name="conf-password" placeholder="password124">
+                            <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('conf-password', this)" title="Mostra Password">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-register">Registrati &rarr;</button>
+
+                </div>
+            </form>
+        </div>
+
+        <div class="login-prompt">
+            <span>Hai già un account?</span>
+            <a href="/" class="btn-login">Accedi</a>
+        </div>
+    </main>
+
+    <footer></footer>
+
+    <script type="module" src="/js/registrazione.js"></script>
+    <script>
+        const iconEyeOpen = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>';
+        const iconEyeSlash = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.83 9L15 12.17V12c0-1.66-1.34-3-3-3h-.17zm-4.3.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm-2.53 6.35L4.27 17C1.96 15.02.6 12.35.6 12c1.73-4.39 6-7.5 11-7.5 1.55 0 3.03.3 4.38.84l.42-.42L17.6 3.69 5.01 16.15zM12 19.5c-3.1 0-5.91-1.22-8.08-3.23l2.84-2.84c.83 1.7 2.45 2.93 4.39 3.23.28.04.56.07.85.07.29 0 .57-.03.85-.07 1.94-.3 3.56-1.53 4.39-3.23l2.84 2.84C17.91 18.28 15.1 19.5 12 19.5z"/></svg>';
+
+        function togglePasswordVisibility(inputId, btnElement) {
+            const inputField = document.getElementById(inputId);
+            if (inputField.type === "password") {
+                inputField.type = "text";
+                btnElement.innerHTML = iconEyeSlash;
+                btnElement.title = "Nascondi Password";
+            } else {
+                inputField.type = "password";
+                btnElement.innerHTML = iconEyeOpen;
+                btnElement.title = "Mostra Password";
+            }
+        }
+    </script>
+
+</body>
+</html>

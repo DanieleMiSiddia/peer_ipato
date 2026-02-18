@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "ES2015",
+    "outDir": "./public/js",
+    "rootDir": "./public/ts",
+    "strict": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "lib": ["ES2016", "DOM"]
+  },
+  "include": ["public/ts/**/*"]
+}

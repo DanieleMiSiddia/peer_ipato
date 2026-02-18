@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peer-ipato - Home</title>
+    <link rel="icon" href="/images/Logo.jpeg" type="image/jpeg">
+    <link rel="stylesheet" href="/css/homepage.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-brand">
+            <img src="/images/Logo.jpeg" alt="Logo" class="header-logo-img">
+            <div class="brand-text">
+                <span class="brand-peer">Peer-</span><span class="brand-ipato">ipato</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout-container">
+
+        <aside class="sidebar">
+            <nav>
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="#" id="dashboard-link" class="menu-item">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="menu-item">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                            <span>Profilo</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="menu-item">
+                            <div class="notification-wrapper">
+                                <svg class="icon" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+                                <span>Notifiche</span>
+                                <span class="badge" id="notifiche-badge"></span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="logout-btn">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:18px; height:18px;"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/></svg>
+                    Logout
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="welcome-box">
+                <img src="/images/Logo.jpeg" alt="Logo" class="welcome-logo">
+                <h1>Benvenuto, <span id="welcome-nome"></span></h1>
+                <p>Piattaforma per la gestione e organizzazione di conferenze.</p>
+            </div>
+        </main>
+
+    </div>
+
+    <footer></footer>
+
+    <script type="module" src="/js/homePage.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peer-ipato - Dashboard Editore</title>
+    <link rel="icon" href="/images/Logo.jpeg" type="image/jpeg">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-brand">
+            <img src="/images/Logo.jpeg" alt="Logo" class="header-logo-img">
+            <div class="brand-text">
+                <span class="brand-peer">Peer-</span><span class="brand-ipato">ipato</span>
+            </div>
+        </div>
+        <span class="header-user" id="header-user"></span>
+    </header>
+
+    <div class="layout-container">
+
+        <aside class="sidebar">
+            <nav>
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="/pages/HomePageUtente.html" class="menu-item">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item active">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                            <span>Articoli da pubblicare</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-10 0H2v20h20V2h-4zM7 4a3 3 0 0 1 6 0v1H7V4zm13 16H4V4h1v3h12V4h1v16z"/></svg>
+                            <span>Pubblicazioni</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="menu-item">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                            <span>Notifiche</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="logout-btn">
+                    <svg class="icon" viewBox="0 0 24 24" style="width:18px;height:18px;"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                    Logout
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <h1 class="page-title">Dashboard Editore</h1>
+            <p class="page-subtitle">Gestisci la pubblicazione degli articoli accettati.</p>
+            <div class="placeholder-card">
+                Questa sezione è in fase di sviluppo. Presto potrai gestire le pubblicazioni degli articoli accettati dalle conferenze da qui.
+            </div>
+        </main>
+
+    </div>
+
+    <footer></footer>
+
+    <script type="module" src="/js/dashboard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,261 @@
+/* -----------------------------------------------------------
+   1. RESET & VARIABILI GLOBALI
+----------------------------------------------------------- */
+:root {
+    --primary-blue: #1B365D;
+    --primary-gold: #C59343;
+    --sidebar-bg: #ffffff;
+    --text-color: #333333;
+    --text-light: #666666;
+    --hover-bg: #f5f7fa;
+    --border-color: #e0e0e0;
+    --overlay-color: rgba(225, 165, 46, 0.11);
+    --radius: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* -----------------------------------------------------------
+   2. HEADER
+----------------------------------------------------------- */
+header {
+    height: 60px;
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-logo-img {
+    height: 35px;
+    width: auto;
+}
+
+.brand-text {
+    font-weight: 800;
+    font-size: 1.4rem;
+    line-height: 1;
+    letter-spacing: -0.5px;
+    cursor: default;
+}
+
+.brand-peer  { color: var(--primary-blue); }
+.brand-ipato { color: var(--primary-gold); }
+
+/* -----------------------------------------------------------
+   3. STRUTTURA MAIN (FLEXBOX)
+----------------------------------------------------------- */
+.layout-container {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 60px - 30px);
+}
+
+/* --- 3A. SIDEBAR (SINISTRA) --- */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+    flex-shrink: 0;
+}
+
+.sidebar-menu {
+    list-style: none;
+    width: 100%;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 25px;
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.menu-item:hover {
+    color: var(--primary-blue);
+    background-color: var(--hover-bg);
+    border-left: 3px solid var(--primary-blue);
+    padding-left: 22px;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+    fill: currentColor;
+}
+
+/* --- NOTIFICHE (BADGE) --- */
+.notification-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.badge {
+    background-color: #e74c3c;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: auto;
+    display: none;
+}
+
+.has-notifications .badge {
+    display: inline-block;
+}
+
+/* --- LOGOUT (BASSO) --- */
+.sidebar-footer {
+    padding: 0 25px;
+    margin-bottom: 10px;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    color: #999;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    padding: 0;
+}
+
+.logout-btn:hover {
+    color: var(--primary-blue);
+}
+
+/* --- 3B. MAIN CONTENT (DESTRA) --- */
+.main-content {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d7ccc8;
+    background-image:
+        linear-gradient(
+            rgba(225, 210, 190, 0.85),
+            rgba(225, 210, 190, 0.70)
+        ),
+        url('/images/Sfondo.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+}
+
+/* --- WELCOME BOX (CENTRALE) --- */
+.welcome-box {
+    background-color: #ffffff;
+    padding: 50px 60px;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    text-align: center;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.welcome-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.welcome-box h1 {
+    font-size: 1.8rem;
+    color: var(--primary-blue);
+    margin-bottom: 10px;
+}
+
+.welcome-box p {
+    color: var(--text-light);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* -----------------------------------------------------------
+   4. FOOTER
+----------------------------------------------------------- */
+footer {
+    height: 30px;
+    background-color: #f4f6f9;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+/* -----------------------------------------------------------
+   5. RESPONSIVE
+----------------------------------------------------------- */
+@media (max-width: 768px) {
+    .layout-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px;
+        border-bottom: 1px solid var(--border-color);
+        border-right: none;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .menu-item span:not(.badge) {
+        display: none;
+    }
+
+    .icon { margin-right: 0; }
+
+    .sidebar-footer { display: none; }
+
+    .welcome-box {
+        margin: 20px;
+        padding: 30px;
+    }
+}

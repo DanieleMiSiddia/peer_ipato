@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc:*)",
+      "Bash(powershell.exe -Command \"Get-Service | Where-Object { $_.DisplayName -like ''*mysql*'' -or $_.DisplayName -like ''*maria*'' }\")",
+      "Bash(npm run build:frontend:*)",
+      "Bash(curl:*)",
+      "Bash(mysql:*)",
+      "Bash(powershell -Command \"Get-Command mysql -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source; Get-ChildItem ''C:\\\\Program Files\\\\MySQL\\\\'' -ErrorAction SilentlyContinue | Select Name; Get-ChildItem ''C:\\\\xampp\\\\mysql\\\\bin\\\\'' -ErrorAction SilentlyContinue | Where-Object Name -eq ''mysql.exe'' | Select FullName\")",
+      "Bash(powershell -Command:*)",
+      "Bash(\"C:/Program Files/MySQL/MySQL Workbench 8.0 CE/mysql.exe\" -u root sistemone -e \"SELECT id_utente, nome, cognome, email, role, competenza, LEFT\\(password, 30\\) AS password_hash FROM utente WHERE email = ''mario.rossi@test.it'';\")",
+      "Bash(\"C:/Program Files/MySQL/MySQL Workbench 8.0 CE/mysql.exe\" -u root sistemone -e \"SELECT * FROM autore WHERE id_utente = ''8e37f'';\")",
+      "Bash(dir \"C:\\\\Users\\\\danie\\\\peer_ipato\" /s /b)",
+      "Bash(cmd /c \"dir C:\\\\Users\\\\danie\\\\peer_ipato /b /a\")",
+      "Bash(cmd /c \"dir /b /a C:\\\\Users\\\\danie\\\\peer_ipato\")",
+      "mcp__plugin_claude-mem_mcp-search__search",
+      "Bash(node:*)",
+      "Bash(echo:*)",
+      "Bash(tasklist)",
+      "Bash(bun:*)",
+      "Bash(where:*)",
+      "mcp__plugin_claude-mem_mcp-search__save_memory"
+    ]
+  }
+}
