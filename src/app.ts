@@ -6,6 +6,7 @@ import pool from './config/database';
 import authRoutes from './routes/authRoutes';
 import modRoutes from './routes/modRoutes';
 import homePageRoutes from './routes/homePageRoutes';
+import dashboardChairRoutes from './routes/dashboardChairRoutes';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/api/auth', authRoutes);
 app.use('/api/utente', modRoutes);
 app.use('/api/homepage', homePageRoutes);
+app.use('/api/dashboard-chair', dashboardChairRoutes);
 
 // Route principale: serve la pagina di autenticazione
 app.get('/', (req, res) => {

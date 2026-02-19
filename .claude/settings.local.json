@@ -19,7 +19,23 @@
       "Bash(tasklist)",
       "Bash(bun:*)",
       "Bash(where:*)",
-      "mcp__plugin_claude-mem_mcp-search__save_memory"
+      "mcp__plugin_claude-mem_mcp-search__save_memory",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(tasklist:*)",
+      "Bash(wmic process where \"ProcessId=15232\" get Name,CommandLine)",
+      "Bash(wmic process where \"ProcessId=24936\" get Name,CommandLine)",
+      "Bash(dir:*)",
+      "Bash(powershell -NoProfile -Command \"netstat -ano\")",
+      "Bash(powershell -NoProfile -Command \"Get-ChildItem ''C:\\\\Users\\\\danie\\\\.claude\\\\debug''\")",
+      "Bash(powershell -NoProfile -Command \"Get-Content ''C:\\\\Users\\\\danie\\\\.claude\\\\debug\\\\0ba21573-d463-446e-8bc6-fcd2448f8708.txt'' -Tail 60\")",
+      "Bash(powershell -NoProfile -Command:*)",
+      "Bash(python3 -c \"\nimport subprocess, sys\nresult = subprocess.run\\([''cmd'', ''/c'', ''findstr'', ''/i'', ''mcp'', ''C:\\\\\\\\Users\\\\\\\\danie\\\\\\\\.claude\\\\\\\\debug\\\\\\\\97d06e80-3adc-4bdc-af83-479b709d8458.txt''], capture_output=True, text=True, encoding=''utf-8'', errors=''replace''\\)\nlines = result.stdout.strip\\(\\).split\\(''\\\\n''\\)[:30]\nfor l in lines:\n    print\\(l\\)\nprint\\(''---stderr---''\\)\nprint\\(result.stderr[:500]\\)\n\")",
+      "Bash(powershell -NoProfile:*)",
+      "Bash(wmic process:*)",
+      "Bash(cmd /c \"netstat -ano | findstr 37777\")",
+      "Bash(cmd /c \"dir C:\\\\Users\\\\danie\\\\.claude\\\\plugins\\\\cache\\\\thedotmack\\\\claude-mem\\\\10.2.5\\\\node_modules 2>&1\")",
+      "Bash(cmd /c netstat -ano)"
     ]
   }
 }

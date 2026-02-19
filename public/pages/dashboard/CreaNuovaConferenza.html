@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peer-ipato - Crea Nuova Conferenza</title>
+    <link rel="icon" href="/images/Logo.jpeg" type="image/jpeg">
+    <link rel="stylesheet" href="/css/creaNuovaConferenza.css">
+</head>
+<body>
+
+<header>
+    <img src="/images/Logo.jpeg" alt="Logo" class="logo-img">
+    <div class="brand-name">Peer-<span>ipato</span></div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="title-section">
+            <h1>Crea Nuova Conferenza</h1>
+            <p>Compila il modulo sottostante per configurare i dettagli, definire i topic e stabilire la cronologia della nuova conferenza.</p>
+        </div>
+
+        <div id="error-alert">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span id="error-msg">Attenzione</span>
+        </div>
+
+        <div class="card">
+            <div class="section-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+                Informazioni Generali
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nome Conferenza</label>
+                    <input type="text" id="conf-name" placeholder="Es. International Conference on AI 2024">
+                </div>
+                <div class="form-group">
+                    <label>Email Editore</label>
+                    <input type="email" id="editore-email" placeholder="editore@email.com">
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                Topic e Metriche
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Topic Conferenza</label>
+                    <div class="topics-container" id="topics-box">
+                        <input type="text" id="topic-input" class="topic-input" placeholder="Scrivi un topic e premi Invio...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Numero Articoli Stimati</label>
+                    <input type="text" id="articoli-stima" placeholder="Es. 100">
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="section-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                Cronologia
+            </div>
+            <div class="timeline-grid">
+                <div class="timeline-block">
+                    <h4><div class="dot" style="background:#3b82f6"></div> Fase Sottomissione</h4>
+                    <div class="form-group">
+                        <label>DATA INIZIO</label>
+                        <input type="text" readonly class="date-trigger" id="sott-inizio" placeholder="dd/mm/aaaa">
+                    </div>
+                    <div class="form-group" style="margin-top:10px">
+                        <label>DATA FINE</label>
+                        <input type="text" readonly class="date-trigger" id="sott-fine" placeholder="dd/mm/aaaa">
+                    </div>
+                </div>
+                <div class="timeline-block">
+                    <h4><div class="dot" style="background:#a855f7"></div> Fase Revisione</h4>
+                    <div class="form-group">
+                        <label>DATA INIZIO</label>
+                        <input type="text" readonly class="date-trigger" id="rev-inizio" placeholder="dd/mm/aaaa">
+                    </div>
+                    <div class="form-group" style="margin-top:10px">
+                        <label>DATA FINE</label>
+                        <input type="text" readonly class="date-trigger" id="rev-fine" placeholder="dd/mm/aaaa">
+                    </div>
+                </div>
+                <div class="timeline-block">
+                    <h4><div class="dot" style="background:#10b981"></div> Giorni Conferenza</h4>
+                    <div class="form-group">
+                        <label>DATA INIZIO</label>
+                        <input type="text" readonly class="date-trigger" id="conf-inizio" placeholder="dd/mm/aaaa">
+                    </div>
+                    <div class="form-group" style="margin-top:10px">
+                        <label>DATA FINE</label>
+                        <input type="text" readonly class="date-trigger" id="conf-fine" placeholder="dd/mm/aaaa">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-annulla" id="btn-annulla">Annulla</button>
+            <button class="btn btn-crea" id="submit-crea">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Crea Conferenza
+            </button>
+        </div>
+    </div>
+</main>
+
+<footer></footer>
+
+<div id="calendar-popup" class="calendar-popup">
+    <div class="cal-header">
+        <span class="cal-nav" id="cal-prev">❮</span>
+        <span id="cal-month-year">Mese 2024</span>
+        <span class="cal-nav" id="cal-next">❯</span>
+    </div>
+    <div class="cal-grid" id="cal-days-header">
+        <div class="cal-day" style="font-weight:700">L</div>
+        <div class="cal-day" style="font-weight:700">M</div>
+        <div class="cal-day" style="font-weight:700">M</div>
+        <div class="cal-day" style="font-weight:700">G</div>
+        <div class="cal-day" style="font-weight:700">V</div>
+        <div class="cal-day" style="font-weight:700">S</div>
+        <div class="cal-day" style="font-weight:700">D</div>
+    </div>
+    <div class="cal-grid" id="cal-days-body"></div>
+</div>
+
+<div id="success-overlay">
+    <div class="success-card">
+        <div class="success-icon">✓</div>
+        <h2>Conferenza Creata con Successo</h2>
+        <p id="success-details"></p>
+        <button class="btn btn-crea" id="btn-success-close" style="margin: 0 auto; width: 100%; justify-content: center;">
+            Torna alla Dashboard
+        </button>
+    </div>
+</div>
+
+<script type="module" src="/js/creaNuovaConferenza.js"></script>
+
+</body>
+</html>
