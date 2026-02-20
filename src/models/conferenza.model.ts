@@ -58,6 +58,43 @@ export async function create(conferenza: Conferenza): Promise<void> {
 }
 
 /**
+ * Inserisce una relazione co-chair tra una conferenza e un chair.
+ */
+export async function addCoChair(id_conferenza: string, id_chair: string): Promise<void> {
+    await pool.execute<ResultSetHeader>(
+        'INSERT INTO co_chair (id_conferenza, id_chair) VALUES (?, ?)',
+        [id_conferenza, id_chair]
+    );
+}
+
+/**
+ * Aggiunge un revisore come membro PC di una conferenza.
+ * Inserisce la relazione diretta nella tabella membro_pc (id_conferenza, id_revisore).
+ */
+export async function addMembroPC(id_conferenza: string, id_revisore: string): Promise<void> {
+    await pool.execute<ResultSetHeader>(
+        'INSERT INTO membro_pc (id_conferenza, id_revisore) VALUES (?, ?)',
+        [id_conferenza, id_revisore]
+    );
+}
+
+/**
+ * Restituisce i dati completi di una singola conferenza,
+ * solo se l'utente è chair principale o co-chair di essa.
+ * Restituisce null se la conferenza non esiste o l'utente non è autorizzato.
+ */
+export async function findByIdForChair(id_conferenza: string, id_utente: string): Promise<Conferenza | null> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        `SELECT DISTINCT c.*
+         FROM conferenza c
+         LEFT JOIN co_chair cc ON c.id_conferenza = cc.id_conferenza
+         WHERE c.id_conferenza = ? AND (c.id_chair = ? OR cc.id_chair = ?)`,
+        [id_conferenza, id_utente, id_utente]
+    );
+    return rows.length > 0 ? (rows[0] as Conferenza) : null;
+}
+
+/**
  * Restituisce tutte le conferenze di cui l'utente è chair principale
  * (conferenza.id_chair) oppure co-chair (tabella co_chair).
  * DISTINCT evita duplicati nel caso (improbabile) in cui un utente

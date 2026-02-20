@@ -1,0 +1,103 @@
+/* -----------------------------------------------------------
+   Stile condiviso per le pagine di aggiunta ruolo a conferenza:
+   - AggiungiCoChair.html
+   - AggiungiMembroPC.html
+----------------------------------------------------------- */
+:root {
+    --primary-blue: #3b5d82;
+    --primary-hover: #2f4c6d;
+    --accent-gold: #C59343;
+
+    --bg-page: #f4f6f9;
+    --bg-white: #ffffff;
+    --bg-info: #fffbeb;
+    --success-green: #10b981;
+
+    --text-dark: #111827;
+    --text-normal: #374151;
+    --text-gray: #6b7280;
+    --text-light: #9ca3af;
+
+    --border-light: #e5e7eb;
+    --border-input: #d1d5db;
+    --border-info: #d09a43e2;
+
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --focus-ring: 0 0 0 3px rgba(59, 93, 130, 0.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-normal);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- HEADER --- */
+header {
+    height: 70px;
+    background-color: var(--bg-white);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    border-bottom: 1px solid var(--border-light);
+    z-index: 10;
+}
+
+.header-brand { display: flex; align-items: center; gap: 12px; }
+.header-logo-img { height: 36px; width: auto; }
+.brand-name { font-size: 1.25rem; font-weight: 700; color: #1e3a5f; }
+.brand-name span { color: var(--accent-gold); }
+
+/* --- MAIN CONTENT --- */
+main { flex: 1; display: flex; justify-content: center; padding: 60px 20px; }
+.content-wrapper { width: 100%; max-width: 650px; display: flex; flex-direction: column; gap: 24px; }
+
+.page-header h1 { font-size: 1.75rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+.page-header p { font-size: 0.95rem; color: var(--text-gray); }
+
+/* Card Form */
+.form-card { background-color: var(--bg-white); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: 32px; position: relative; }
+.form-group { display: flex; flex-direction: column; margin-bottom: 24px; }
+.form-label { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
+
+.input-wrapper { position: relative; display: flex; align-items: center; }
+.input-icon { position: absolute; left: 14px; width: 20px; height: 20px; fill: var(--text-light); }
+.email-input { width: 100%; padding: 12px 14px 12px 42px; border: 1px solid var(--border-input); border-radius: var(--radius-md); font-size: 0.95rem; transition: all 0.2s; }
+.email-input:focus { outline: none; border-color: var(--primary-blue); box-shadow: var(--focus-ring); }
+.email-input.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15); }
+
+.help-text { margin-top: 8px; font-size: 0.8rem; color: var(--text-gray); }
+
+.form-message { padding: 10px 15px; border-radius: 6px; font-size: 0.85rem; font-weight: 500; margin-bottom: 15px; text-align: center; }
+.form-message.error   { background-color: #fde8e8; color: #b91c1c; border: 1px solid #f3b5b5; }
+.form-message.success { background-color: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
+
+/* Pulsanti */
+.card-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 32px; }
+.btn { padding: 10px 20px; border-radius: var(--radius-md); font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; border: none; }
+.btn-secondary { background-color: var(--bg-white); color: var(--text-dark); border: 1px solid var(--border-input); }
+.btn-primary { background-color: var(--primary-blue); color: var(--bg-white); }
+.btn-primary:hover { background-color: var(--primary-hover); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Info Box */
+.info-box { display: flex; align-items: flex-start; gap: 16px; background-color: var(--bg-info); border: 1px solid var(--border-info); border-radius: var(--radius-md); padding: 20px; }
+.info-icon { width: 24px; height: 24px; fill: var(--accent-gold); }
+.info-content strong { display: block; font-size: 0.95rem; color: var(--text-dark); margin-bottom: 6px; }
+.info-content p { font-size: 0.85rem; color: var(--text-gray); line-height: 1.5; }
+
+/* --- FOOTER --- */
+footer {
+    height: 30px;
+    background-color: var(--bg-page);
+    border-top: 1px solid var(--border-light);
+    flex-shrink: 0;
+}

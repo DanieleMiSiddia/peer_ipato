@@ -8,7 +8,7 @@ export interface Utente {
     cognome: string;
     email: string;
     password: string;
-    role: 'autore' | 'revisore' | 'chair' | 'membro_pc' | 'editore';
+    role: 'autore' | 'revisore' | 'chair' | 'editore';
     competenza: string | null;
     ultimo_logout: Date | null;
 }
@@ -42,7 +42,7 @@ export async function create(utente: Utente): Promise<void> {
     );
 }
 
-const VALID_ROLES = ['autore', 'revisore', 'chair', 'membro_pc', 'editore'] as const;
+const VALID_ROLES = ['autore', 'revisore', 'chair', 'editore'] as const;
 
 // Inserisce utente e tabella di specializzazione in un'unica transazione atomica
 export async function createWithSpecialization(utente: Utente): Promise<void> {
@@ -83,12 +83,28 @@ export async function findRoleById(id_utente: string): Promise<string | null> {
     return rows.length > 0 ? (rows[0].role as string) : null;
 }
 
+export async function findRoleByEmail(email: string): Promise<{ id_utente: string; role: string } | null> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        'SELECT id_utente, role FROM utente WHERE email = ?',
+        [email]
+    );
+    return rows.length > 0 ? (rows[0] as { id_utente: string; role: string }) : null;
+}
+
 export async function findPasswordById(id_utente: string): Promise<string | null> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         'SELECT password FROM utente WHERE id_utente = ?',
         [id_utente]
     );
     return rows.length > 0 ? (rows[0].password as string) : null;
+}
+
+export async function findEmailById(id_utente: string): Promise<string | null> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        'SELECT email FROM utente WHERE id_utente = ?',
+        [id_utente]
+    );
+    return rows.length > 0 ? (rows[0].email as string) : null;
 }
 
 export async function updatePassword(id_utente: string, password: string): Promise<void> {

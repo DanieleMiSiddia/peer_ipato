@@ -84,10 +84,14 @@ function loadConferences() {
                     ${conf.stato}
                 </div>
                 <div class="actions">
-                    <button class="btn btn-primary">Gestisci Articoli</button>
-                    <button class="btn btn-secondary">Presentazione Lavoro</button>
+                    <button class="btn btn-primary">Gestisci Conferenza</button>
                 </div>
             `;
+                // Collega il bottone "Gestisci Conferenza" alla pagina di gestione
+                const btnGestisci = row.querySelector('.btn-primary');
+                btnGestisci.addEventListener('click', () => {
+                    window.location.href = '/pages/GestioneConferenza.html?id=' + conf.id_conferenza;
+                });
                 container.appendChild(row);
             });
             countLabel.innerText = `${conferenze.length} CONFERENZE`;

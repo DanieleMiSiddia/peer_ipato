@@ -11,6 +11,9 @@
 --   #7  notifiche.id_notifica → AUTO_INCREMENT
 --   #8  Ampliati VARCHAR troppo corti
 --   #9  Naming convention normalizzata a snake_case
+--   #10 membro_pc ridisegnato: non più ruolo utente ma relazione conferenza↔revisore
+--       Rimossa tabella specializzazione membro_pc e tabella invitato_a.
+--       Ruoli utente validi: autore | revisore | chair | editore
 -- ============================================================
 
 DROP SCHEMA IF EXISTS sistemone;
@@ -48,11 +51,6 @@ CREATE TABLE revisore (
 CREATE TABLE chair (
     id_utente CHAR(5) PRIMARY KEY,
     CONSTRAINT chair_fk FOREIGN KEY (id_utente) REFERENCES utente(id_utente) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE membro_pc (
-    id_utente CHAR(5) PRIMARY KEY,
-    CONSTRAINT membro_pc_fk FOREIGN KEY (id_utente) REFERENCES utente(id_utente) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE editore (
@@ -134,16 +132,13 @@ CREATE TABLE notifiche (
 -- TABELLE ASSOCIATIVE (relazioni N-M)
 -- ============================================================
 
--- Inviti a conferenza (membro_pc <-> conferenza)
-CREATE TABLE invitato_a (
+-- Membri del Program Committee (conferenza <-> revisore)
+CREATE TABLE membro_pc (
     id_conferenza CHAR(6),
-    id_membro_pc CHAR(5),
-    stato_invito VARCHAR(15) NOT NULL DEFAULT 'INVITATO',
-    data_invito DATE NOT NULL,
-    CONSTRAINT invitato_a_pk PRIMARY KEY (id_conferenza, id_membro_pc),
-    CONSTRAINT statoinvito_ck CHECK (stato_invito IN ('INVITATO', 'ACCETTATO', 'RIFIUTATO', 'SCADUTO')),
-    CONSTRAINT invito_conferenza_fk FOREIGN KEY (id_conferenza) REFERENCES conferenza(id_conferenza) ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT invito_membro_fk FOREIGN KEY (id_membro_pc) REFERENCES membro_pc(id_utente) ON UPDATE CASCADE ON DELETE NO ACTION
+    id_revisore   CHAR(5),
+    PRIMARY KEY (id_conferenza, id_revisore),
+    CONSTRAINT membro_pc_conferenza_fk FOREIGN KEY (id_conferenza) REFERENCES conferenza(id_conferenza) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT membro_pc_revisore_fk   FOREIGN KEY (id_revisore)   REFERENCES revisore(id_utente)      ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Gestione revisioni (revisore <-> revisione)

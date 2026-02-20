@@ -1,0 +1,191 @@
+/* --- 1. VARIABILI E RESET --- */
+:root {
+    --primary-blue: #1e3a5f;
+    --accent-gold: #C59343;
+    --bg-page: #f4f6f8;
+    --white: #ffffff;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+    --radius: 12px;
+    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+    /* Colori icone */
+    --icon-yellow-bg: #fef3c7; --icon-yellow: #d97706;
+    --icon-red-bg: #fee2e2;    --icon-red: #ef4444;
+    --icon-blue-bg: #dbeafe;   --icon-blue: #3b82f6;
+    --icon-green-bg: #dcfce7;  --icon-green: #22c55e;
+    --icon-purple-bg: #f3e8ff; --icon-purple: #9333ea;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- 2. HEADER --- */
+header {
+    height: 70px;
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    position: fixed;
+    top: 0; width: 100%; z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.logo-img { height: 36px; width: auto; }
+
+.brand-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+.brand-name span { color: var(--accent-gold); }
+
+/* --- 3. MAIN CONTENT --- */
+main {
+    flex: 1;
+    margin-top: 70px;
+    padding: 80px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-header {
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.page-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.btn-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.btn-back:hover { color: var(--text-primary); }
+
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.conference-name { color: var(--accent-gold); }
+
+.page-header p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    max-width: 650px;
+    line-height: 1.5;
+}
+
+/* --- GRIGLIA AZIONI --- */
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.action-card {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.action-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--border-color);
+}
+
+.icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-box svg { width: 22px; height: 22px; }
+
+.yellow  { background-color: var(--icon-yellow-bg); color: var(--icon-yellow); }
+.red     { background-color: var(--icon-red-bg);    color: var(--icon-red); }
+.blue    { background-color: var(--icon-blue-bg);   color: var(--icon-blue); }
+.green   { background-color: var(--icon-green-bg);  color: var(--icon-green); }
+.purple  { background-color: var(--icon-purple-bg); color: var(--icon-purple); }
+
+.action-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.action-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* --- 4. FOOTER --- */
+footer {
+    height: 30px;
+    background-color: #f4f6f9;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+    .actions-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .actions-grid { grid-template-columns: 1fr; }
+    .page-header h1 { font-size: 1.6rem; }
+    header { padding: 0 20px; }
+}

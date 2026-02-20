@@ -30,6 +30,44 @@ function calcolaStato(
 }
 
 // ============================================================
+// CONTROLLER: aggiunge un co-chair a una conferenza
+// ============================================================
+export const insertCoChair = async (req: Request, res: Response) => {
+    try {
+        const id_conferenza = req.params.id as string;
+        const { email } = req.body;
+
+        // 1. Verifica che chi fa la richiesta sia chair/co-chair di questa conferenza
+        const conferenza = await ConferenzaModel.findByIdForChair(id_conferenza, req.user!.id_utente);
+        if (!conferenza) {
+            return res.status(403).json({ message: 'Accesso non autorizzato o conferenza non trovata' });
+        }
+
+        // 2. Verifica che l'email esista e che il ruolo sia 'chair'
+        const utente = await UtenteModel.findRoleByEmail(email);
+        if (!utente) {
+            return res.status(404).json({ message: 'Nessun utente trovato con questa email' });
+        }
+        if (utente.role !== 'chair') {
+            return res.status(400).json({ message: 'L\'utente non ha il ruolo di Chair' });
+        }
+
+        // 3. Crea la relazione co-chair
+        await ConferenzaModel.addCoChair(id_conferenza, utente.id_utente);
+
+        res.status(201).json({ message: 'Co-chair aggiunto con successo' });
+
+    } catch (error: any) {
+        // Gestione duplicato: la coppia (id_conferenza, id_chair) esiste già
+        if (error.code === 'ER_DUP_ENTRY') {
+            return res.status(409).json({ message: 'Questo chair è già co-chair di questa conferenza' });
+        }
+        console.error('Errore aggiunta co-chair:', error);
+        res.status(500).json({ message: 'Errore interno del server' });
+    }
+};
+
+// ============================================================
 // CONTROLLER: recupera e restituisce le conferenze del Chair
 // ============================================================
 export const getConferenzeChair = async (req: Request, res: Response) => {
@@ -58,6 +96,49 @@ export const getConferenzeChair = async (req: Request, res: Response) => {
 
     } catch (error) {
         console.error('Errore recupero conferenze chair:', error);
+        res.status(500).json({ message: 'Errore interno del server' });
+    }
+};
+
+// ============================================================
+// CONTROLLER: restituisce i dati di una singola conferenza
+// ============================================================
+export const getConferenzaById = async (req: Request, res: Response) => {
+    try {
+        const id_utente     = req.user!.id_utente;
+        const id_conferenza = req.params.id as string;
+
+        // Cerca la conferenza verificando che l'utente sia chair o co-chair
+        const conferenza = await ConferenzaModel.findByIdForChair(id_conferenza, id_utente);
+
+        if (!conferenza) {
+            return res.status(404).json({ message: 'Conferenza non trovata o accesso non autorizzato' });
+        }
+
+        res.status(200).json({ conferenza });
+
+    } catch (error) {
+        console.error('Errore recupero conferenza:', error);
+        res.status(500).json({ message: 'Errore interno del server' });
+    }
+};
+
+// ============================================================
+// CONTROLLER: restituisce il profilo dell'utente autenticato
+// ============================================================
+export const getProfilo = async (req: Request, res: Response) => {
+    try {
+        const id_utente = req.user!.id_utente;
+
+        const utente = await UtenteModel.findById(id_utente);
+        if (!utente) {
+            return res.status(404).json({ message: 'Utente non trovato' });
+        }
+
+        res.status(200).json({ utente });
+
+    } catch (error) {
+        console.error('Errore recupero profilo:', error);
         res.status(500).json({ message: 'Errore interno del server' });
     }
 };
@@ -131,6 +212,46 @@ export const createConferenza = async (req: Request, res: Response) => {
 
     } catch (error) {
         console.error('Errore creazione conferenza:', error);
+        res.status(500).json({ message: 'Errore interno del server' });
+    }
+};
+
+// ============================================================
+// CONTROLLER: aggiunge un membro PC a una conferenza
+// ============================================================
+export const insertMembroPC = async (req: Request, res: Response) => {
+    try {
+        const id_conferenza = req.params.id as string;
+        const { email } = req.body;
+
+        // 1. Verifica che chi fa la richiesta sia chair/co-chair di questa conferenza
+        const conferenza = await ConferenzaModel.findByIdForChair(id_conferenza, req.user!.id_utente);
+        if (!conferenza) {
+            return res.status(403).json({ message: 'Accesso non autorizzato o conferenza non trovata' });
+        }
+
+        // 2. Verifica che l'email esista nel sistema
+        const utente = await UtenteModel.findRoleByEmail(email);
+        if (!utente) {
+            return res.status(404).json({ message: 'Nessun utente trovato con questa email' });
+        }
+
+        // 3. Verifica che il ruolo dell'utente sia 'revisore'
+        if (utente.role !== 'revisore') {
+            return res.status(400).json({ message: 'L\'utente non ha il ruolo di Revisore' });
+        }
+
+        // 4. Crea la relazione nella tabella membro_pc
+        await ConferenzaModel.addMembroPC(id_conferenza, utente.id_utente);
+
+        res.status(201).json({ message: 'Membro PC invitato con successo' });
+
+    } catch (error: any) {
+        // Gestione duplicato: la coppia (id_conferenza, id_revisore) esiste già
+        if (error.code === 'ER_DUP_ENTRY') {
+            return res.status(409).json({ message: 'Questo utente è già membro PC di questa conferenza' });
+        }
+        console.error('Errore aggiunta membro PC:', error);
         res.status(500).json({ message: 'Errore interno del server' });
     }
 };
