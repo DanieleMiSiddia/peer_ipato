@@ -5,18 +5,18 @@ import pool from '../config/database';
 // INTERFACCIA: mappa 1:1 tutte le colonne della tabella conferenza
 // ============================================================
 export interface Conferenza {
-    id_conferenza:           string;
-    data_inizio_conferenza:  Date;
-    data_fine_conferenza:    Date;
-    data_inizio_revisione:   Date;
-    data_fine_revisione:     Date;
+    id_conferenza: string;
+    data_inizio_conferenza: Date;
+    data_fine_conferenza: Date;
+    data_inizio_revisione: Date;
+    data_fine_revisione: Date;
     data_inizio_sottomissione: Date;
-    data_fine_sottomissione:   Date;
-    numero_articoli:         number;
-    nome:                    string;
-    topic:                   string;
-    id_chair:                string;
-    id_editore:              string;
+    data_fine_sottomissione: Date;
+    numero_articoli: number;
+    nome: string;
+    topic: string;
+    id_chair: string;
+    id_editore: string;
 }
 
 // ============================================================
@@ -100,6 +100,33 @@ export async function findByIdForChair(id_conferenza: string, id_utente: string)
  * DISTINCT evita duplicati nel caso (improbabile) in cui un utente
  * compaia in entrambe le relazioni per la stessa conferenza.
  */
+/**
+ * Restituisce tutte le conferenze che sono attualmente in "Fase Sottomissione",
+ * cioè dove la data odierna è compresa tra data_inizio_sottomissione e data_fine_sottomissione.
+ * Usata dalla DashboardAutore per mostrare le conferenze a cui un autore può sottomettere.
+ */
+export async function findConferenzeInSottomissione(): Promise<Conferenza[]> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        `SELECT
+            id_conferenza,
+            data_inizio_conferenza,
+            data_fine_conferenza,
+            data_inizio_revisione,
+            data_fine_revisione,
+            data_inizio_sottomissione,
+            data_fine_sottomissione,
+            numero_articoli,
+            nome,
+            topic,
+            id_chair,
+            id_editore
+         FROM conferenza
+         WHERE CURDATE() BETWEEN data_inizio_sottomissione AND data_fine_sottomissione
+         ORDER BY data_fine_sottomissione ASC`
+    );
+    return rows as Conferenza[];
+}
+
 export async function findConferenzeByChair(id_utente: string): Promise<Conferenza[]> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT DISTINCT
