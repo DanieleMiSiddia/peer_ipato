@@ -8,6 +8,7 @@ import modRoutes from './routes/modRoutes';
 import homePageRoutes from './routes/homePageRoutes';
 import dashboardChairRoutes from './routes/dashboardChairRoutes';
 import dashboardAutoreRoutes from './routes/dashboardAutoreRoutes';
+import dashboardEditoreRoutes from './routes/dashboardEditoreRoutes';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use('/api/utente', modRoutes);
 app.use('/api/homepage', homePageRoutes);
 app.use('/api/dashboard-chair', dashboardChairRoutes);
 app.use('/api/dashboard-autore', dashboardAutoreRoutes);
+app.use('/api/dashboard-editore', dashboardEditoreRoutes);
 
 // Route principale: serve la pagina di autenticazione
 app.get('/', (req, res) => {

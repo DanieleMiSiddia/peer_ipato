@@ -149,3 +149,17 @@ export async function findConferenzeByChair(id_utente: string): Promise<Conferen
     );
     return rows as Conferenza[];
 }
+export async function findConferenzeByEditore(id_utente: string): Promise<any[]> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        `SELECT 
+            c.id_conferenza,
+            c.nome,
+            COUNT(CASE WHEN a.stato IN ('ACCETTATO', 'RIFIUTATO') THEN 1 END) as articoli_revisionati
+         FROM conferenza c
+         LEFT JOIN articolo a ON c.id_conferenza = a.id_conferenza
+         WHERE c.id_editore = ?
+         GROUP BY c.id_conferenza`,
+        [id_utente]
+    );
+    return rows;
+}
