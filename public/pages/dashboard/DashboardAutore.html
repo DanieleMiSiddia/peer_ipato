@@ -44,7 +44,6 @@
                             d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
                     </svg>
                     Logout
-                    </button>
                 </a>
             </div>
         </aside>
@@ -53,13 +52,13 @@
             <div class="page-header">
                 <div class="page-header-top">
                     <h1>Dashboard Autore</h1>
-                    <button id="btn-lista-articoli" class="btn-lista">
+                    <a href="/pages/ListaArticoliSottomessi.html" class="btn-lista">
                         <svg class="icon" viewBox="0 0 24 24">
                             <path
                                 d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" />
                         </svg>
                         Lista Articoli Sottomessi
-                    </button>
+                    </a>
                 </div>
                 <p>Conferenze aperte alla sottomissione di paper</p>
             </div>
@@ -80,7 +79,11 @@
             </div>
 
             <div id="empty-state">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
                 <h2>Non ci sono conferenze aperte alla sottomissione al momento.</h2>
             </div>
         </section>

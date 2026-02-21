@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import * as ConferenzaModel from '../models/conferenza.model';
 import { Conferenza } from '../models/conferenza.model';
 import * as UtenteModel from '../models/utente.model';
+import * as ArticoloModel from '../models/articolo.model';
 
 // ============================================================
 // TIPO: dati conferenza restituiti alla DashboardAutore
@@ -53,6 +54,25 @@ export const getProfilo = async (req: Request, res: Response) => {
 
     } catch (error) {
         console.error('Errore recupero profilo:', error);
+        res.status(500).json({ message: 'Errore interno del server' });
+    }
+};
+
+// ============================================================
+// CONTROLLER: recupera gli articoli sottomessi dall'autore
+// ============================================================
+export const getArticoliAutore = async (req: Request, res: Response) => {
+    try {
+        const id_utente = req.user!.id_utente;
+
+        // Recupera gli articoli dal model
+        const articoli = await ArticoloModel.findByAutore(id_utente);
+
+        // Restituisce l'array al frontend
+        res.status(200).json({ articoli });
+
+    } catch (error) {
+        console.error('Errore recupero articoli autore:', error);
         res.status(500).json({ message: 'Errore interno del server' });
     }
 };
