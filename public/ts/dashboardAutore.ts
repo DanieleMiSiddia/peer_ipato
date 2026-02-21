@@ -100,7 +100,7 @@ async function loadConferenze(): Promise<void> {
             // Collega il bottone alla pagina di sottomissione
             const btnSottometti = row.querySelector('.btn-primary') as HTMLButtonElement;
             btnSottometti.addEventListener('click', () => {
-                window.location.href = '/pages/NuovaSottomissione.html?id=' + conf.id_conferenza;
+                window.location.href = '/pages/SottomettiArticolo.html?id=' + conf.id_conferenza;
             });
 
             container.appendChild(row);

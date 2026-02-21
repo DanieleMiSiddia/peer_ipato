@@ -363,9 +363,9 @@ main {
 }
 
 .btn-primary {
-    background: #476A91;
+    background: var(--primary-blue);
     color: var(--white);
-    box-shadow: 0 2px 4px rgba(71, 106, 145, 0.2);
+    box-shadow: 0 2px 4px rgba(27, 54, 93, 0.2);
 }
 
 .btn-secondary {
