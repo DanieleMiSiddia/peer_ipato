@@ -1,0 +1,142 @@
+ion-content {
+    --background: #f4f6f9;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+// ── Header ──────────────────────────────────────────────────
+.app-header {
+    height: 70px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    border-bottom: 1px solid #e5e7eb;
+    z-index: 10;
+}
+
+.header-brand { display: flex; align-items: center; gap: 12px; }
+.header-logo-img { height: 36px; width: auto; }
+.brand-name { font-size: 1.25rem; font-weight: 700; color: #1e3a5f; span { color: #C59343; } }
+
+// ── Main ────────────────────────────────────────────────────
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.content-wrapper {
+    width: 100%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+// ── Page header ──────────────────────────────────────────────
+.page-header {
+    h1 { font-size: 1.75rem; font-weight: 700; color: #111827; margin-bottom: 8px; }
+    p  { font-size: 0.95rem; color: #6b7280; }
+}
+
+// ── Form card ────────────────────────────────────────────────
+.form-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    padding: 32px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+
+.form-label { font-size: 0.9rem; font-weight: 600; color: #111827; margin-bottom: 8px; }
+
+.input-wrapper { position: relative; display: flex; align-items: center; }
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    width: 20px;
+    height: 20px;
+    fill: #9ca3af;
+}
+
+.email-input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    outline: none;
+    font-family: inherit;
+
+    &:focus {
+        border-color: #3b5d82;
+        box-shadow: 0 0 0 3px rgba(59, 93, 130, 0.15);
+    }
+}
+
+.help-text { margin-top: 8px; font-size: 0.8rem; color: #6b7280; }
+
+// ── Messaggi ─────────────────────────────────────────────────
+.form-message {
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    text-align: center;
+
+    &.error   { background-color: #fde8e8; color: #b91c1c; border: 1px solid #f3b5b5; }
+    &.success { background-color: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
+}
+
+// ── Azioni ───────────────────────────────────────────────────
+.card-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 32px; }
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.btn-secondary { background-color: #ffffff; color: #374151; border: 1px solid #d1d5db; }
+.btn-primary   { background-color: #3b5d82; color: #ffffff; &:hover { background-color: #2f4c6d; } }
+
+// ── Info box ─────────────────────────────────────────────────
+.info-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background-color: #fffbeb;
+    border: 1px solid #d09a43e2;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.info-icon { width: 24px; height: 24px; fill: #C59343; flex-shrink: 0; }
+
+.info-content {
+    strong { display: block; font-size: 0.95rem; color: #111827; margin-bottom: 6px; }
+    p      { font-size: 0.85rem; color: #6b7280; line-height: 1.5; }
+}

@@ -1,0 +1,113 @@
+<ion-content [fullscreen]="true">
+    <div class="page-wrapper">
+
+        <header class="app-header">
+            <div class="header-content">
+                <img src="assets/Logo.jpeg" alt="Logo Peer-ipato" class="logo-img">
+                <div class="brand-name">Peer-<span>ipato</span></div>
+            </div>
+            <span class="header-user-name">{{ nomeUtente }}</span>
+        </header>
+
+        <main class="main-content">
+            <div class="container">
+
+                <div class="page-header">
+                    <div class="page-header-top">
+                        <h1>Lista Articoli Sottomessi</h1>
+                        <button class="btn-back" (click)="goBack()">
+                            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                            Torna alla Dashboard
+                        </button>
+                    </div>
+                    <p>Gestisci i tuoi contributi scientifici e monitora lo stato delle tue sottomissioni in tempo reale.</p>
+                </div>
+
+                @if (errorMsg) {
+                    <div class="error-alert">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <span>{{ errorMsg }}</span>
+                    </div>
+                }
+
+                @if (!isEmpty) {
+                    <div class="list-container">
+                        <div class="list-title-bar">
+                            <span>{{ articoli.length }} ARTICOLI</span>
+                        </div>
+
+                        <div class="table-head">
+                            <div>Titolo Articolo</div>
+                            <div>Conferenza</div>
+                            <div>Stato</div>
+                            <div class="col-actions">Azioni</div>
+                        </div>
+
+                        @for (art of articoli; track art.id_articolo) {
+                            <div class="article-row">
+                                <div class="article-info">
+                                    <h3>{{ art.titolo }}</h3>
+                                    <p>{{ art.id_articolo }} &bull; {{ art.topic }}</p>
+                                </div>
+                                <div class="conf-name">{{ art.id_conferenza }}</div>
+                                <div>
+                                    <span class="badge" [ngClass]="getStatoBadge(art.stato).classe">
+                                        {{ getStatoBadge(art.stato).label }}
+                                    </span>
+                                </div>
+                                <div class="actions">
+                                    <button class="icon-btn delete" title="Elimina"
+                                            (click)="chiediConfermaElimina(art)">
+                                        <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+                @if (isEmpty) {
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                        <h2>Non hai ancora sottomesso alcun articolo.</h2>
+                        <p>Inizia sottomettendo un paper a una delle conferenze attive.</p>
+                    </div>
+                }
+
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Overlay conferma eliminazione -->
+    @if (articoloDaEliminare) {
+        <div class="confirm-overlay">
+            <div class="confirm-card">
+                <div class="confirm-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                    </svg>
+                </div>
+                <h2>Elimina Articolo</h2>
+                <p>Sei sicuro di voler eliminare l'articolo:</p>
+                <p class="article-title-preview">{{ articoloDaEliminare.titolo }}</p>
+                <p class="confirm-warning">Questa azione è irreversibile.</p>
+                <div class="confirm-actions">
+                    <button class="btn-annulla" (click)="annullaElimina()" [disabled]="deleteLoading">
+                        Annulla
+                    </button>
+                    <button class="btn-elimina" (click)="confermaElimina()" [disabled]="deleteLoading">
+                        {{ deleteLoading ? 'Eliminazione...' : 'Elimina' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+</ion-content>

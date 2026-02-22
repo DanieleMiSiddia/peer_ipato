@@ -1,0 +1,159 @@
+ion-content {
+    --background: #f4f6f8;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+// ── Header ──────────────────────────────────────────────────
+.app-header {
+    height: 70px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    border-bottom: 1px solid #e5e7eb;
+    flex-shrink: 0;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-img { height: 36px; width: auto; }
+
+.brand-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e3a5f;
+
+    span { color: #C59343; }
+}
+
+// ── Main ────────────────────────────────────────────────────
+.main-content {
+    flex: 1;
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+}
+
+// ── Page header ──────────────────────────────────────────────
+.page-header {
+    margin-bottom: 40px;
+}
+
+.page-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1f2937;
+}
+
+.conference-name { color: #C59343; }
+
+.page-header p {
+    color: #6b7280;
+    font-size: 1rem;
+    max-width: 650px;
+    line-height: 1.5;
+}
+
+.btn-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6b7280;
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    white-space: nowrap;
+
+    &:hover { color: #1f2937; }
+}
+
+// ── Griglia azioni ───────────────────────────────────────────
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.action-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        border-color: #e5e7eb;
+    }
+
+    &.disabled {
+        opacity: 0.5;
+        cursor: default;
+
+        &:hover {
+            transform: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-color: transparent;
+        }
+    }
+
+    h3 { font-size: 1rem; font-weight: 700; color: #1f2937; }
+    p  { font-size: 0.85rem; color: #6b7280; line-height: 1.4; }
+}
+
+.icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg { width: 22px; height: 22px; }
+}
+
+.yellow { background-color: #fef3c7; color: #d97706; }
+.green  { background-color: #dcfce7; color: #22c55e; }
+.purple { background-color: #f3e8ff; color: #9333ea; }
+
+// ── Responsive ──────────────────────────────────────────────
+@media (max-width: 900px) {
+    .actions-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .actions-grid { grid-template-columns: 1fr; }
+    .page-header h1 { font-size: 1.6rem; }
+    .app-header { padding: 0 20px; }
+}

@@ -1,0 +1,52 @@
+<ion-content [fullscreen]="true">
+    <div class="page-wrapper">
+
+        <header class="app-header">
+            <div class="header-brand">
+                <img src="assets/Logo.jpeg" alt="Logo" class="header-logo-img">
+                <div class="brand-text">
+                    <span class="brand-peer">Peer-</span><span class="brand-ipato">ipato</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="layout-container">
+
+            <aside class="sidebar">
+                <nav>
+                    <ul class="sidebar-menu">
+                        <li>
+                            <a class="menu-item" (click)="goToDashboard()">
+                                <svg class="icon" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/profilo" class="menu-item">
+                                <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                <span>Profilo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <button class="logout-btn" (click)="logout()">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:18px; height:18px;"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                        Logout
+                    </button>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                <div class="welcome-box">
+                    <img src="assets/Logo.jpeg" alt="Logo" class="welcome-logo">
+                    <h1>Benvenuto, <span>{{ nomeUtente }}</span></h1>
+                    <p>Piattaforma per la gestione e organizzazione di conferenze.</p>
+                </div>
+            </main>
+
+        </div>
+
+    </div>
+</ion-content>

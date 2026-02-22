@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peer-ipato - Lista Articoli Program Committee</title>
+    <link rel="icon" href="/images/Logo.jpeg" type="image/jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/listaArticoliPC.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-brand">
+            <img src="/images/Logo.jpeg" alt="Peer-ipato Logo">
+            <div class="brand-name">Peer-<span>ipato</span></div>
+        </div>
+        <span id="header-user" class="header-user-name"></span>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <div class="page-header-top">
+                    <h1>Lista Articoli Program Committee</h1>
+                    <button id="btn-torna-indietro" class="btn-back">
+                        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                        Torna Indietro
+                    </button>
+                </div>
+                <p>Lista degli articoli che possono essere revisionati da te o da altri utenti che incarichi</p>
+            </div>
+
+            <div id="articles-container">
+                <div class="table-row table-header">
+                    <div class="col-title"><span>Titolo dell'articolo</span></div>
+                    <div class="col-stato"><span>Stato</span></div>
+                    <div class="col-actions"><span>Azioni</span></div>
+                </div>
+                <div id="articles-body"></div>
+            </div>
+
+            <div id="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <p>Nessun articolo sottomesso a questa conferenza.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer></footer>
+
+    <script type="module" src="/js/listaArticoliPC.js"></script>
+
+</body>
+</html>

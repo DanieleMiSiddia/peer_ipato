@@ -1,0 +1,56 @@
+<ion-content [fullscreen]="true">
+    <div class="page-wrapper">
+
+        <header class="app-header">
+            <div class="header-brand">
+                <img src="assets/Logo.jpeg" alt="Logo Peer-ipato" class="logo-img">
+                <div class="brand-name">Peer-<span>ipato</span></div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="container">
+
+                <div class="page-header">
+                    <div class="page-header-top">
+                        <h1>Gestione Conferenza: <span class="conference-name">{{ nomeConferenza }}</span></h1>
+                        <button class="btn-back" (click)="goBack()">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                            Torna Indietro
+                        </button>
+                    </div>
+                    <p>Pannello di amministrazione per la gestione dei comitati, delle scadenze e dei ruoli amministrativi. Seleziona un'azione per procedere.</p>
+                </div>
+
+                <div class="actions-grid">
+
+                    <div class="action-card" (click)="goToInserisciMembro()">
+                        <div class="icon-box yellow">
+                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path></svg>
+                        </div>
+                        <h3>Inserisci membro PC</h3>
+                        <p>Aggiungi un nuovo revisore al comitato.</p>
+                    </div>
+
+                    <div class="action-card" (click)="goToInserisciChair()">
+                        <div class="icon-box green">
+                            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <h3>Inserisci Chair</h3>
+                        <p>Nomina un nuovo chair per la conferenza.</p>
+                    </div>
+
+                    <div class="action-card disabled">
+                        <div class="icon-box purple">
+                            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <h3>Visualizza Articoli Pubblicati</h3>
+                        <p>Consulta l'elenco dei paper approvati e pubblicati negli atti.</p>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+    </div>
+</ion-content>

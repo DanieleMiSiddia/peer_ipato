@@ -1,0 +1,60 @@
+<ion-content [fullscreen]="true">
+    <div class="page-wrapper">
+
+        <header class="app-header">
+            <div class="header-brand">
+                <img src="assets/Logo.jpeg" alt="Logo" class="header-logo-img">
+                <div class="brand-name">Peer-<span>ipato</span></div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="content-wrapper">
+
+                <div class="page-header">
+                    <h1>Modifica E-mail</h1>
+                    <p>Inserisci il nuovo indirizzo e-mail che vuoi associare al tuo account.</p>
+                </div>
+
+                <div class="form-card">
+
+                    @if (messaggio) {
+                        <div class="form-message" [class.error]="tipoMsg === 'error'" [class.success]="tipoMsg === 'success'">
+                            {{ messaggio }}
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label class="form-label" for="nuova-email">Nuova E-mail</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                            <input
+                                type="email"
+                                id="nuova-email"
+                                class="email-input"
+                                placeholder="nome.cognome@esempio.it"
+                                [(ngModel)]="nuovaEmail"
+                                [disabled]="loading">
+                        </div>
+                    </div>
+
+                    <div class="card-actions">
+                        <button type="button" class="btn btn-secondary" (click)="annulla()" [disabled]="loading">
+                            Annulla
+                        </button>
+                        <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="loading">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                            {{ loading ? 'Salvataggio...' : 'Modifica' }}
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+    </div>
+</ion-content>

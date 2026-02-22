@@ -1,21 +1,25 @@
 /* -----------------------------------------------------------
-   VARIABILI E RESET
+   VARIABILI E RESET (Condivisi con dashboardAutore)
 ----------------------------------------------------------- */
 :root {
     --primary-blue: #1B365D;
-    --accent-gold:  #C59343;
-    --bg-main:      #F4F6F9;
-    --white:        #FFFFFF;
-    --text-dark:    #333333;
-    --text-gray:    #6B7280;
-    --text-light:   #666666;
-    --hover-bg:     #f5f7fa;
+    --accent-gold: #C59343;
+    --bg-main: #F4F6F9;
+    --white: #FFFFFF;
+    --text-dark: #333333;
+    --text-gray: #6B7280;
+    --text-light: #666666;
+    --hover-bg: #f5f7fa;
     --border-color: #e0e0e0;
-    --radius:       8px;
-    --shadow:       0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --radius: 8px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -23,8 +27,7 @@ body {
     color: var(--text-dark);
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
 }
 
 /* -----------------------------------------------------------
@@ -62,7 +65,9 @@ header {
     cursor: default;
 }
 
-.brand-name span { color: var(--accent-gold); }
+.brand-name span {
+    color: var(--accent-gold);
+}
 
 .header-user-name {
     font-size: 0.9rem;
@@ -75,9 +80,17 @@ header {
 ----------------------------------------------------------- */
 main {
     display: flex;
+    justify-content: center;
     flex: 1;
-    height: calc(100vh - 60px - 30px);
-    overflow: hidden;
+    padding: 60px 20px;
+    background-color: var(--bg-main);
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
 }
 
 /* -----------------------------------------------------------
@@ -135,21 +148,6 @@ main {
     flex-shrink: 0;
 }
 
-/* Badge notifiche */
-.notif-badge {
-    display: none;
-    position: absolute;
-    right: 15px;
-    background: #E74C3C;
-    color: white;
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 10px;
-    font-weight: 700;
-}
-
-.has-unread .notif-badge { display: block; }
-
 /* Footer sidebar (logout) */
 .sidebar-footer {
     padding: 0 25px;
@@ -182,7 +180,9 @@ main {
     overflow-y: auto;
 }
 
-.page-header { margin-bottom: 35px; }
+.page-header {
+    margin-bottom: 35px;
+}
 
 .page-header-top {
     display: flex;
@@ -191,28 +191,47 @@ main {
     margin-bottom: 6px;
 }
 
-.page-header h1 { font-size: 2rem; font-weight: 700; }
-.page-header p  { color: var(--text-gray); font-size: 1rem; }
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+}
 
-.btn-crea {
-    display: flex;
+.page-header p {
+    color: var(--text-gray);
+    font-size: 1rem;
+}
+
+/* -----------------------------------------------------------
+   BOTTONE TORNA ALLA DASHBOARD
+----------------------------------------------------------- */
+.btn-back {
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    background: var(--primary-blue);
+    gap: 6px;
+    padding: 9px 18px;
+    background-color: var(--primary-blue);
     color: var(--white);
     border: none;
     border-radius: var(--radius);
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    transition: filter 0.2s;
+    transition: background 0.2s ease;
+    white-space: nowrap;
 }
 
-.btn-crea:hover { filter: brightness(1.15); }
+.btn-back svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.btn-back:hover {
+    background-color: #152d4e;
+}
 
 /* -----------------------------------------------------------
-   TABELLA CONFERENZE
+   TABELLA ARTICOLI
 ----------------------------------------------------------- */
 .list-container {
     background: var(--white);
@@ -228,14 +247,12 @@ main {
     color: var(--white);
     font-weight: 700;
     font-size: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
+/* Colonne: Titolo Articolo | Conferenza | Stato | Azioni */
 .table-head {
     display: grid;
-    grid-template-columns: 2.2fr 1fr 1fr 1.3fr;
+    grid-template-columns: 2fr 1.2fr 1fr 0.6fr;
     padding: 18px 25px;
     font-size: 0.85rem;
     font-weight: 800;
@@ -246,68 +263,111 @@ main {
     border-bottom: 1px solid var(--border-color);
 }
 
-.conf-row {
+.article-row {
     display: grid;
-    grid-template-columns: 2.2fr 1fr 1fr 1.3fr;
+    grid-template-columns: 2fr 1.2fr 1fr 0.6fr;
     align-items: center;
     padding: 22px 25px;
     border-bottom: 1px solid var(--border-color);
     transition: background 0.1s;
 }
 
-.conf-row:last-child { border-bottom: none; }
-.conf-row:hover      { background: #F8FAFC; }
+.article-row:last-child {
+    border-bottom: none;
+}
 
-.conf-info h3 { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
-.conf-info p  { font-size: 0.85rem; color: var(--text-gray); }
+.article-row:hover {
+    background: #F8FAFC;
+}
 
-/* Badge ruoli */
+.article-info h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+}
+
+.article-info p {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+
+.conf-name {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+/* Badge stati */
 .badge {
     padding: 6px 14px;
     border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 600;
     text-align: center;
-    border: 1px solid transparent;
 }
 
-.badge-purple { background: #F3F0FF; color: #6B21A8; border-color: #D8B4FE; }
-.badge-blue   { background: #E0F2FE; color: #0369A1; border-color: #7DD3FC; }
-.badge-green  { background: #F0FDF4; color: #166534; border-color: #BBF7D0; }
-
-/* Stato */
-.status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #1E293B;
+.badge-yellow {
+    background: #FEF3C7;
+    color: #92400E;
 }
 
-.dot        { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.dot-green  { background: #22C55E; box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15); }
-.dot-yellow { background: #EAB308; box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.15); }
-.dot-blue   { background: #3B82F6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
+/* Sottomesso */
+.badge-blue {
+    background: #E0F2FE;
+    color: #0369A1;
+}
+
+/* In Revisione */
+.badge-green {
+    background: #DCFCE7;
+    color: #166534;
+}
+
+/* Accettato */
+.badge-red {
+    background: #FEE2E2;
+    color: #991B1B;
+}
+
+/* Rifiutato */
 
 /* Pulsanti azione */
-.actions { display: flex; gap: 10px; }
-
-.btn {
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    transition: filter 0.2s;
-    flex: 1;
-    text-align: center;
+.actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
 }
 
-.btn-primary   { background: #476A91; color: var(--white); box-shadow: 0 2px 4px rgba(71,106,145,0.2); }
-.btn-secondary { background: #CBD5E1; color: #334155; }
-.btn:hover     { filter: brightness(0.9); }
+.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-gray);
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.icon-btn:hover {
+    background-color: var(--hover-bg);
+}
+
+.icon-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.icon-btn.edit:hover {
+    color: var(--primary-blue);
+}
+
+.icon-btn.delete:hover {
+    color: #E74C3C;
+}
 
 /* -----------------------------------------------------------
    STATO VUOTO

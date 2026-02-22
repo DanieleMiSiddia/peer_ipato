@@ -6,7 +6,11 @@ import pool from './config/database';
 import authRoutes from './routes/authRoutes';
 import modRoutes from './routes/modRoutes';
 import homePageRoutes from './routes/homePageRoutes';
-import dashboardChairRoutes from './routes/dashboardChairRoutes';
+import dashboardChairRoutes    from './routes/dashboardChairRoutes';
+import dashboardRevisoreRoutes  from './routes/dashboardRevisoreRoutes';
+import dashboardMembroPCRoutes  from './routes/dashboardMembroPCRoutes';
+import dashboardAutoreRoutes    from './routes/dashboardAutoreRoutes';
+import articoloRoutes           from './routes/articoloRoutes';
 
 dotenv.config();
 
@@ -14,7 +18,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware globali
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:8100', 'http://localhost:4200', 'http://localhost:3000'],
+    credentials: true
+}));
 app.use(express.json());
 
 // File statici (frontend)
@@ -24,7 +31,11 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/api/auth', authRoutes);
 app.use('/api/utente', modRoutes);
 app.use('/api/homepage', homePageRoutes);
-app.use('/api/dashboard-chair', dashboardChairRoutes);
+app.use('/api/dashboard-chair',    dashboardChairRoutes);
+app.use('/api/dashboard-revisore', dashboardRevisoreRoutes);
+app.use('/api/dashboard-membro-pc', dashboardMembroPCRoutes);
+app.use('/api/dashboard-autore',   dashboardAutoreRoutes);
+app.use('/api/articolo',           articoloRoutes);
 
 // Route principale: serve la pagina di autenticazione
 app.get('/', (req, res) => {

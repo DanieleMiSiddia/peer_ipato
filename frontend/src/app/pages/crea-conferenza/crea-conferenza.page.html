@@ -1,0 +1,138 @@
+<ion-content [fullscreen]="true">
+    <div class="page-wrapper">
+
+        <header class="app-header">
+            <img src="assets/Logo.jpeg" alt="Logo" class="logo-img">
+            <div class="brand-name">Peer-<span>ipato</span></div>
+        </header>
+
+        <main class="main-content">
+            <div class="container">
+
+                <div class="title-section">
+                    <h1>Crea Nuova Conferenza</h1>
+                    <p>Compila il modulo sottostante per configurare i dettagli, definire i topic e stabilire la cronologia della nuova conferenza.</p>
+                </div>
+
+                @if (errorMessage) {
+                    <div class="error-alert">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <span>{{ errorMessage }}</span>
+                    </div>
+                }
+
+                <!-- Informazioni Generali -->
+                <div class="card">
+                    <div class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+                        Informazioni Generali
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nome Conferenza</label>
+                            <input type="text" [(ngModel)]="nome" placeholder="Es. International Conference on AI 2024">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Editore</label>
+                            <input type="email" [(ngModel)]="editoreEmail" placeholder="editore@email.com">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic e Metriche -->
+                <div class="card">
+                    <div class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path></svg>
+                        Topic e Metriche
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Topic Conferenza</label>
+                            <div class="topics-container">
+                                @for (t of selectedTopics; track t) {
+                                    <div class="badge">
+                                        {{ t }} <span (click)="removeTopic(t)">×</span>
+                                    </div>
+                                }
+                                <input type="text" class="topic-input" [(ngModel)]="topicInput"
+                                    placeholder="Scrivi un topic e premi Invio..."
+                                    (keydown)="addTopic($event)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Numero Articoli Stimati</label>
+                            <input type="number" [(ngModel)]="articoliStima" placeholder="Es. 100" min="1">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cronologia -->
+                <div class="card">
+                    <div class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Cronologia
+                    </div>
+                    <div class="timeline-grid">
+                        <div class="timeline-block">
+                            <h4><div class="dot" style="background:#3b82f6"></div> Fase Sottomissione</h4>
+                            <div class="form-group">
+                                <label>DATA INIZIO</label>
+                                <input type="date" [(ngModel)]="sottInizio">
+                            </div>
+                            <div class="form-group" style="margin-top:10px">
+                                <label>DATA FINE</label>
+                                <input type="date" [(ngModel)]="sottFine">
+                            </div>
+                        </div>
+                        <div class="timeline-block">
+                            <h4><div class="dot" style="background:#a855f7"></div> Fase Revisione</h4>
+                            <div class="form-group">
+                                <label>DATA INIZIO</label>
+                                <input type="date" [(ngModel)]="revInizio">
+                            </div>
+                            <div class="form-group" style="margin-top:10px">
+                                <label>DATA FINE</label>
+                                <input type="date" [(ngModel)]="revFine">
+                            </div>
+                        </div>
+                        <div class="timeline-block">
+                            <h4><div class="dot" style="background:#10b981"></div> Giorni Conferenza</h4>
+                            <div class="form-group">
+                                <label>DATA INIZIO</label>
+                                <input type="date" [(ngModel)]="confInizio">
+                            </div>
+                            <div class="form-group" style="margin-top:10px">
+                                <label>DATA FINE</label>
+                                <input type="date" [(ngModel)]="confFine">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Azioni -->
+                <div class="actions">
+                    <button class="btn btn-annulla" (click)="goBack()">Annulla</button>
+                    <button class="btn btn-crea" (click)="submit()" [disabled]="loading">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        {{ loading ? 'Creazione...' : 'Crea Conferenza' }}
+                    </button>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Success overlay -->
+    @if (showSuccess) {
+        <div class="success-overlay">
+            <div class="success-card">
+                <div class="success-icon">✓</div>
+                <h2>Conferenza Creata con Successo</h2>
+                <p [innerHTML]="successDetails"></p>
+                <button class="btn btn-crea" (click)="goBack()">Torna alla Dashboard</button>
+            </div>
+        </div>
+    }
+
+</ion-content>

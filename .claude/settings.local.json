@@ -35,7 +35,12 @@
       "Bash(wmic process:*)",
       "Bash(cmd /c \"netstat -ano | findstr 37777\")",
       "Bash(cmd /c \"dir C:\\\\Users\\\\danie\\\\.claude\\\\plugins\\\\cache\\\\thedotmack\\\\claude-mem\\\\10.2.5\\\\node_modules 2>&1\")",
-      "Bash(cmd /c netstat -ano)"
+      "Bash(cmd /c netstat -ano)",
+      "Bash(test:*)",
+      "Bash(\"/c/Users/danie/peer_ipato/public/pages/dashboard/DashboardMembroPC.html\":*)",
+      "Bash(npm run build:*)",
+      "Bash(\"/c/Users/danie/peer_ipato/public/pages/VisualizzaArticoli.html\":*)",
+      "Bash(npx ng build:*)"
     ]
   }
 }

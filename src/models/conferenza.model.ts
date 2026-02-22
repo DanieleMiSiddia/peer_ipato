@@ -95,6 +95,58 @@ export async function findByIdForChair(id_conferenza: string, id_utente: string)
 }
 
 /**
+ * Restituisce tutte le conferenze in cui il revisore è membro PC
+ * (tabella membro_pc).
+ */
+export async function findConferenzeByMembroPC(id_revisore: string): Promise<Conferenza[]> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        `SELECT
+            c.id_conferenza,
+            c.data_inizio_conferenza,
+            c.data_fine_conferenza,
+            c.data_inizio_revisione,
+            c.data_fine_revisione,
+            c.data_inizio_sottomissione,
+            c.data_fine_sottomissione,
+            c.numero_articoli,
+            c.nome,
+            c.topic,
+            c.id_chair,
+            c.id_editore
+         FROM membro_pc mp
+         JOIN conferenza c ON mp.id_conferenza = c.id_conferenza
+         WHERE mp.id_revisore = ?`,
+        [id_revisore]
+    );
+    return rows as Conferenza[];
+}
+
+/**
+ * Restituisce tutte le conferenze presenti nel database.
+ * Il filtro per fase (sottomissione, revisione, ecc.) viene
+ * applicato a livello di controller.
+ */
+export async function findConferenze(): Promise<Conferenza[]> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        `SELECT
+            id_conferenza,
+            data_inizio_conferenza,
+            data_fine_conferenza,
+            data_inizio_revisione,
+            data_fine_revisione,
+            data_inizio_sottomissione,
+            data_fine_sottomissione,
+            numero_articoli,
+            nome,
+            topic,
+            id_chair,
+            id_editore
+         FROM conferenza`
+    );
+    return rows as Conferenza[];
+}
+
+/**
  * Restituisce tutte le conferenze di cui l'utente è chair principale
  * (conferenza.id_chair) oppure co-chair (tabella co_chair).
  * DISTINCT evita duplicati nel caso (improbabile) in cui un utente

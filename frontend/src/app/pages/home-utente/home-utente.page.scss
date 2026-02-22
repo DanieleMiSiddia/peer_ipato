@@ -1,0 +1,193 @@
+ion-content {
+    --background: #f4f6f9;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+// ── Header ──────────────────────────────────────────────────
+.app-header {
+    height: 60px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-logo-img {
+    height: 35px;
+    width: auto;
+}
+
+.brand-text {
+    font-weight: 800;
+    font-size: 1.4rem;
+    line-height: 1;
+    letter-spacing: -0.5px;
+    cursor: default;
+}
+
+.brand-peer  { color: #1B365D; }
+.brand-ipato { color: #C59343; }
+
+// ── Layout ──────────────────────────────────────────────────
+.layout-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+// ── Sidebar ─────────────────────────────────────────────────
+.sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+    flex-shrink: 0;
+}
+
+.sidebar-menu {
+    list-style: none;
+    width: 100%;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 25px;
+    color: #666666;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        color: #1B365D;
+        background-color: #f5f7fa;
+        border-left: 3px solid #1B365D;
+        padding-left: 22px;
+    }
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+    fill: currentColor;
+}
+
+.sidebar-footer {
+    padding: 0 25px;
+    margin-bottom: 10px;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    color: #999;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    padding: 0;
+    gap: 8px;
+
+    &:hover { color: #1B365D; }
+}
+
+// ── Main content ────────────────────────────────────────────
+.main-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d7ccc8;
+    background-image:
+        linear-gradient(
+            rgba(225, 210, 190, 0.85),
+            rgba(225, 210, 190, 0.70)
+        ),
+        url('/assets/Sfondo.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+}
+
+// ── Welcome box ─────────────────────────────────────────────
+.welcome-box {
+    background-color: #ffffff;
+    padding: 50px 60px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1 {
+        font-size: 1.8rem;
+        color: #1B365D;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #666666;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+}
+
+.welcome-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+// ── Responsive ──────────────────────────────────────────────
+@media (max-width: 768px) {
+    .layout-container { flex-direction: column; }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px;
+        border-bottom: 1px solid #e0e0e0;
+        border-right: none;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .menu-item span { display: none; }
+    .icon { margin-right: 0; }
+    .sidebar-footer { display: none; }
+
+    .welcome-box {
+        margin: 20px;
+        padding: 30px;
+    }
+}

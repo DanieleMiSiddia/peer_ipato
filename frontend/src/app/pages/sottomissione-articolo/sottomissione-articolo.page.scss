@@ -1,0 +1,267 @@
+ion-content {
+    --background: #f4f6f9;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+// ── Header ──────────────────────────────────────────────────
+.app-header {
+    height: 70px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    flex-shrink: 0;
+}
+
+.header-brand { display: flex; align-items: center; gap: 12px; }
+.logo-img     { height: 36px; width: auto; }
+.brand-name   { font-size: 1.25rem; font-weight: 700; color: #1e3a5f; span { color: #C59343; } }
+
+// ── Main ────────────────────────────────────────────────────
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.container { width: 100%; max-width: 850px; }
+
+// ── Card ────────────────────────────────────────────────────
+.submission-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+    padding: 40px;
+}
+
+.page-header {
+    margin-bottom: 32px;
+    h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    p  { color: #6b7280; font-size: 1rem; line-height: 1.5; }
+}
+
+.section-title   { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+.section-subtext { font-size: 0.9rem; color: #6b7280; margin-bottom: 16px; }
+
+// ── Campi testo ───────────────────────────────────────────────
+.fields-section { margin-bottom: 32px; display: flex; flex-direction: column; gap: 20px; }
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    label { font-size: 0.9rem; font-weight: 600; color: #1f2937; }
+}
+
+.field-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+    background-color: #ffffff;
+    color: #1f2937;
+
+    &:focus   { border-color: #3b5d82; }
+    &:disabled { opacity: 0.6; }
+}
+
+// ── Upload area ───────────────────────────────────────────────
+.upload-section { margin-bottom: 8px; }
+
+.upload-area {
+    border: 2px dashed #9ca3af;
+    background-color: #fcfcfc;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover, &.drag-over {
+        background-color: #f9fafb;
+        border-color: #3b5d82;
+    }
+}
+
+.upload-icon  { width: 48px; height: 48px; color: #3b5d82; margin: 0 auto 12px; display: block; }
+.upload-text  { font-size: 0.95rem; color: #1f2937; font-weight: 500; margin-bottom: 16px; }
+
+.btn-attach {
+    background-color: #3b5d82;
+    color: #ffffff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+}
+
+// ── File item ─────────────────────────────────────────────────
+.file-list { margin-top: 20px; }
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.file-icon    { width: 32px; height: 32px; color: #C59343; flex-shrink: 0; }
+.file-info    { flex: 1; }
+.file-name    { font-size: 0.9rem; font-weight: 600; }
+.file-details { font-size: 0.8rem; color: #6b7280; span { color: #10b981; font-weight: 500; } }
+
+.btn-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #9ca3af;
+    padding: 4px;
+    transition: color 0.2s;
+
+    &:hover { color: #ef4444; }
+}
+
+// ── Messaggio errore file ────────────────────────────────────
+.error-msg { color: #ef4444; font-size: 0.85rem; margin-top: 8px; }
+
+// ── Error alert (banner, stile CreaConferenza) ────────────────
+.error-alert {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #ef4444;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+// ── Pulsanti azione ───────────────────────────────────────────
+.actions-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.btn-action {
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+}
+
+.btn-cancel {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #1f2937;
+    &:hover:not(:disabled) { background: #f9fafb; }
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.btn-confirm {
+    background: #3b5d82;
+    color: #ffffff;
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &.active {
+        opacity: 1;
+        cursor: pointer;
+        &:hover { background: #2d4663; }
+    }
+}
+
+// ── Success overlay (stile CreaConferenza) ────────────────────
+.success-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    backdrop-filter: blur(4px);
+}
+
+.success-card {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    animation: popIn 0.3s ease-out;
+
+    h2 { margin-bottom: 10px; color: #1e3a5f; }
+    p  { color: #6b7280; margin-bottom: 24px; font-size: 0.95rem; }
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    background: #10b981;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 32px;
+}
+
+.btn-confirm-overlay {
+    background: #3b5d82;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    width: 100%;
+
+    &:hover { background: #2d4663; }
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+// ── Responsive ──────────────────────────────────────────────
+@media (max-width: 600px) {
+    .submission-card { padding: 24px; }
+    .actions-row     { flex-direction: column-reverse; }
+    .btn-action      { width: 100%; justify-content: center; }
+}

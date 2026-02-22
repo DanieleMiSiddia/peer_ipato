@@ -1,0 +1,111 @@
+<ion-content [fullscreen]="true">
+    <div class="page-wrapper">
+
+        <header class="reg-header">
+            <div class="header-left">
+                <img src="assets/Logo.jpeg" alt="Logo Peer-ipato" class="header-logo">
+                <div class="brand-text">
+                    <span class="brand-peer">Peer-</span><span class="brand-ipato">ipato</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="reg-main">
+            <div class="registration-card">
+
+                <div class="card-header">
+                    <h1>Crea un nuovo account</h1>
+                    <p>Compila il modulo per unirti alla nostra community scientifica.</p>
+                </div>
+
+                @if (messaggio) {
+                    <div class="form-message" [class.error]="tipoMsg === 'error'" [class.success]="tipoMsg === 'success'">
+                        {{ messaggio }}
+                    </div>
+                }
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" name="given-name" autocomplete="given-name"
+                               placeholder="Mario" [(ngModel)]="nome" [disabled]="loading">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cognome">Cognome</label>
+                        <input type="text" id="cognome" name="family-name" autocomplete="family-name"
+                               placeholder="Rossi" [(ngModel)]="cognome" [disabled]="loading">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="email">E-mail Istituzionale</label>
+                        <input type="email" id="email" name="email" autocomplete="email"
+                               placeholder="mario.rossi@universita.it" [(ngModel)]="email" [disabled]="loading">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ruolo">Ruolo Principale</label>
+                        <select id="ruolo" name="ruolo" autocomplete="off" [(ngModel)]="ruolo" [disabled]="loading">
+                            <option value="" disabled>Seleziona un ruolo...</option>
+                            <option value="Chair">Chair</option>
+                            <option value="Autore">Autore</option>
+                            <option value="Revisore">Revisore</option>
+                            <option value="Editore">Editore</option>
+                        </select>
+                        <small>Il ruolo non potrà essere modificato in seguito.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="competenze">Competenze e Topic <span class="optional">(opzionale)</span></label>
+                        <input type="text" id="competenze" name="competenze" autocomplete="off"
+                               placeholder="Es. Machine Learning" [(ngModel)]="competenze" [disabled]="loading">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input [type]="showPassword ? 'text' : 'password'" id="password"
+                                   name="new-password" autocomplete="new-password"
+                                   placeholder="Minimo 6 caratteri" [(ngModel)]="password" [disabled]="loading">
+                            <button type="button" class="toggle-btn" (click)="showPassword = !showPassword">
+                                @if (showPassword) {
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.83 9L15 12.17V12c0-1.66-1.34-3-3-3h-.17zm-4.3.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm-5.54-4.61L3.27 6.47C1.29 7.97.1 10.11 0 12.5c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42 2.79 2.79 1.41-1.41L3.27 3.27 1.99 4.99zM12 5c3.1 0 5.91 1.22 8.08 3.23l-2.84 2.84C16.41 9.38 14.3 8 12 8c-.93 0-1.81.24-2.58.65L7.97 7.2C9.19 5.82 10.5 5 12 5z"/></svg>
+                                } @else {
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                                }
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conf-password">Conferma Password</label>
+                        <div class="password-wrapper">
+                            <input [type]="showConfPassword ? 'text' : 'password'" id="conf-password"
+                                   name="confirm-password" autocomplete="new-password"
+                                   placeholder="Ripeti la password" [(ngModel)]="confPassword" [disabled]="loading">
+                            <button type="button" class="toggle-btn" (click)="showConfPassword = !showConfPassword">
+                                @if (showConfPassword) {
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.83 9L15 12.17V12c0-1.66-1.34-3-3-3h-.17zm-4.3.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm-5.54-4.61L3.27 6.47C1.29 7.97.1 10.11 0 12.5c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42 2.79 2.79 1.41-1.41L3.27 3.27 1.99 4.99zM12 5c3.1 0 5.91 1.22 8.08 3.23l-2.84 2.84C16.41 9.38 14.3 8 12 8c-.93 0-1.81.24-2.58.65L7.97 7.2C9.19 5.82 10.5 5 12 5z"/></svg>
+                                } @else {
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                                }
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-register full-width" (click)="submit()" [disabled]="loading">
+                        {{ loading ? 'Registrazione in corso...' : 'Registrati →' }}
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="login-prompt">
+                <span>Hai già un account?</span>
+                <a routerLink="/auth" class="btn-login">Accedi</a>
+            </div>
+        </main>
+
+    </div>
+</ion-content>

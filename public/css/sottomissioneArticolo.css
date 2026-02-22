@@ -1,0 +1,207 @@
+/* --- 1. VARIABILI E RESET --- */
+:root {
+    --primary-blue: #3b5d82;
+    --primary-hover: #2d4663;
+    --accent-gold: #C59343;
+    --bg-page: #f4f6f9;
+    --white: #ffffff;
+    --text-dark: #1f2937;
+    --text-gray: #6b7280;
+    --text-light: #9ca3af;
+    --border-color: #e5e7eb;
+    --success-green: #10b981;
+    --error-red: #ef4444;
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --header-height: 70px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- 2. HEADER --- */
+header {
+    height: var(--header-height);
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    position: fixed;
+    top: 0; width: 100%; z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.header-brand { display: flex; align-items: center; gap: 12px; }
+.logo-img { height: 36px; width: auto; }
+.brand-name { font-size: 1.25rem; font-weight: 700; color: #1e3a5f; }
+.brand-name span { color: var(--accent-gold); }
+
+/* --- 3. MAIN CONTENT --- */
+main {
+    flex: 1;
+    margin-top: var(--header-height);
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.container { width: 100%; max-width: 850px; }
+
+.submission-card {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 40px;
+}
+
+/* Intestazione pagina */
+.page-header { margin-bottom: 32px; }
+.page-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+.page-header p { color: var(--text-gray); font-size: 1rem; line-height: 1.5; }
+
+/* Titoli sezione */
+.section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+.section-subtext { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 16px; }
+
+/* Sezione campi testo */
+.fields-section { margin-bottom: 32px; display: flex; flex-direction: column; gap: 20px; }
+
+.field-group { display: flex; flex-direction: column; gap: 6px; }
+
+.field-group label { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); }
+
+.field-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+    background-color: var(--white);
+    color: var(--text-dark);
+}
+
+.field-input:focus { border-color: var(--primary-blue); }
+
+/* Area upload */
+.upload-area {
+    border: 2px dashed var(--text-light);
+    background-color: #fcfcfc;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.upload-area:hover,
+.upload-area.drag-over {
+    background-color: #f9fafb;
+    border-color: var(--primary-blue);
+}
+
+.upload-icon { width: 48px; height: 48px; color: var(--primary-blue); margin-bottom: 12px; }
+.upload-text { font-size: 0.95rem; color: var(--text-dark); font-weight: 500; margin-bottom: 16px; }
+
+.btn-attach {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#file-input { display: none; }
+
+/* Lista file caricati */
+.file-list { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
+
+.file-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px; background-color: #f9fafb;
+    border: 1px solid var(--border-color); border-radius: 8px;
+}
+
+.file-icon { width: 32px; height: 32px; color: var(--accent-gold); flex-shrink: 0; }
+.file-info { flex: 1; }
+.file-name { font-size: 0.9rem; font-weight: 600; }
+.file-details { font-size: 0.8rem; color: var(--text-gray); }
+.file-details span { color: var(--success-green); font-weight: 500; }
+.btn-delete { background: none; border: none; cursor: pointer; color: var(--text-light); padding: 4px; }
+.btn-delete:hover { color: var(--error-red); }
+
+/* Messaggi errore */
+#error-msg        { color: var(--error-red); font-size: 0.85rem; margin-top: 8px;  display: none; }
+#submit-error-msg { color: var(--error-red); font-size: 0.85rem; margin-top: 24px; display: none; }
+
+/* Pulsanti azione */
+.actions-row { display: flex; justify-content: flex-end; gap: 16px; margin-top: 32px; }
+
+.btn-action {
+    padding: 12px 28px; border-radius: 8px;
+    font-weight: 600; cursor: pointer;
+    transition: 0.2s; border: none;
+    display: flex; align-items: center; gap: 8px;
+}
+
+.btn-cancel { background: var(--white); border: 1px solid var(--border-color); color: var(--text-dark); }
+.btn-cancel:hover { background: #f9fafb; }
+
+.btn-confirm { background: var(--primary-blue); color: var(--white); opacity: 0.5; cursor: not-allowed; }
+.btn-confirm.active { opacity: 1; cursor: pointer; }
+.btn-confirm.active:hover { background: var(--primary-hover); }
+
+/* Toast successo */
+#success-toast {
+    position: fixed; bottom: 30px; right: 30px;
+    background: var(--white); border-left: 5px solid var(--success-green);
+    padding: 24px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    display: none; align-items: flex-start; gap: 16px;
+    max-width: 400px; z-index: 2000;
+    animation: fadeInRight 0.4s ease forwards;
+}
+
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+.toast-icon { width: 24px; height: 24px; color: var(--success-green); margin-top: 2px; flex-shrink: 0; }
+.toast-title { font-weight: 700; margin-bottom: 4px; }
+.toast-text { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 16px; }
+
+.btn-toast-ok {
+    background: none; border: none; color: var(--primary-blue);
+    font-weight: 700; cursor: pointer; font-size: 0.9rem;
+}
+
+/* --- 4. FOOTER --- */
+footer {
+    height: 30px;
+    background-color: #f4f6f9;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .submission-card { padding: 24px; }
+    .actions-row { flex-direction: column-reverse; }
+    .btn-action { width: 100%; justify-content: center; }
+}

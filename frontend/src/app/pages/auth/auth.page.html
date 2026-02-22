@@ -1,0 +1,77 @@
+<ion-content [fullscreen]="true">
+    <div class="page-wrapper">
+
+        <header class="auth-header">
+            <div class="header-container">
+                <img src="assets/Logo.jpeg" alt="Logo Peer-ipato" class="header-logo">
+                <div class="brand-text">
+                    <span class="brand-peer">Peer-</span><span class="brand-ipato">ipato</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="auth-main">
+            <div class="login-card">
+
+                <div class="card-visual">
+                    <div class="visual-content">
+                        <h2>Benvenuto</h2>
+                        <p>Gestisci conferenze, eventi e networking in un unico luogo. Accedi per iniziare.</p>
+                    </div>
+                </div>
+
+                <div class="card-form">
+                    <div class="form-header">
+                        <h2>Accedi</h2>
+                        <p>Inserisci le tue credenziali per entrare.</p>
+                    </div>
+
+                    <form (ngSubmit)="onLogin()">
+                        @if (errorMessage) {
+                            <div class="form-message error">{{ errorMessage }}</div>
+                        }
+                        @if (successMessage) {
+                            <div class="form-message success">{{ successMessage }}</div>
+                        }
+
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <ion-input
+                                type="email"
+                                [(ngModel)]="email"
+                                name="email"
+                                placeholder="nome@esempio.com"
+                                fill="outline"
+                                [required]="true">
+                            </ion-input>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <ion-input
+                                type="password"
+                                [(ngModel)]="password"
+                                name="password"
+                                placeholder="Inserisci la tua password"
+                                fill="outline"
+                                [required]="true">
+                            </ion-input>
+                            <a href="#" class="forgot-password">Hai dimenticato la password?</a>
+                        </div>
+
+                        <ion-button expand="block" type="submit" [disabled]="loading">
+                            {{ loading ? 'Accesso in corso...' : 'Accedi' }}
+                        </ion-button>
+                    </form>
+
+                    <div class="form-footer">
+                        <span>Non hai ancora un account?</span>
+                        <a routerLink="/registrazione" class="link-create">Crea un Account</a>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+</ion-content>

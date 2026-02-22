@@ -1,26 +1,27 @@
 /* -----------------------------------------------------------
-   VARIABILI GLOBALI
+   VARIABILI E RESET
+   Utilizzato da: DashboardChair, DashboardRevisore, DashboardMembroPC, …
 ----------------------------------------------------------- */
 :root {
     --primary-blue: #1B365D;
-    --primary-gold: #C59343;
-    --sidebar-bg: #ffffff;
-    --text-color: #333333;
-    --text-light: #666666;
-    --hover-bg: #f5f7fa;
+    --accent-gold:  #C59343;
+    --bg-main:      #F4F6F9;
+    --white:        #FFFFFF;
+    --text-dark:    #333333;
+    --text-gray:    #6B7280;
+    --text-light:   #666666;
+    --hover-bg:     #f5f7fa;
     --border-color: #e0e0e0;
-    --radius: 8px;
+    --radius:       8px;
+    --shadow:       0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: var(--text-color);
+    background-color: var(--bg-main);
+    color: var(--text-dark);
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -32,90 +33,94 @@ body {
 ----------------------------------------------------------- */
 header {
     height: 60px;
-    background-color: #ffffff;
-    border-bottom: 1px solid var(--border-color);
+    background: var(--white);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
+    border-bottom: 1px solid var(--border-color);
     flex-shrink: 0;
     z-index: 10;
 }
 
-.header-brand {
+.header-content {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.header-logo-img {
+.logo-img {
     height: 35px;
     width: auto;
 }
 
-.brand-text {
-    font-weight: 800;
+.brand-name {
     font-size: 1.4rem;
-    line-height: 1;
+    font-weight: 800;
     letter-spacing: -0.5px;
+    line-height: 1;
+    color: var(--primary-blue);
     cursor: default;
 }
 
-.brand-peer  { color: var(--primary-blue); }
-.brand-ipato { color: var(--primary-gold); }
+.brand-name span { color: var(--accent-gold); }
 
-.header-user {
+.header-user-name {
     font-size: 0.9rem;
-    color: var(--text-light);
     font-weight: 500;
+    color: var(--text-gray);
 }
 
 /* -----------------------------------------------------------
-   STRUTTURA MAIN
+   LAYOUT MAIN
 ----------------------------------------------------------- */
-.layout-container {
+main {
     display: flex;
     flex: 1;
     height: calc(100vh - 60px - 30px);
     overflow: hidden;
 }
 
-/* --- SIDEBAR --- */
+/* -----------------------------------------------------------
+   SIDEBAR
+----------------------------------------------------------- */
 .sidebar {
     width: 250px;
-    background-color: var(--sidebar-bg);
+    background: var(--white);
     border-right: 1px solid var(--border-color);
+    padding: 20px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20px 0;
     flex-shrink: 0;
 }
 
-.sidebar-menu {
-    list-style: none;
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
     width: 100%;
 }
 
-.menu-item {
+.nav-item {
     display: flex;
     align-items: center;
     padding: 12px 25px;
-    color: var(--text-light);
     text-decoration: none;
+    color: var(--text-light);
     font-weight: 500;
-    font-size: 0.95rem;
     transition: all 0.2s ease;
+    position: relative;
+    font-size: 0.95rem;
 }
 
-.menu-item:hover {
+.nav-item:hover {
     color: var(--primary-blue);
     background-color: var(--hover-bg);
     border-left: 3px solid var(--primary-blue);
     padding-left: 22px;
 }
 
-.menu-item.active {
+.nav-item.active {
     color: var(--primary-blue);
     background-color: var(--hover-bg);
     border-left: 3px solid var(--primary-blue);
@@ -131,6 +136,22 @@ header {
     flex-shrink: 0;
 }
 
+/* Badge notifiche sidebar */
+.notif-badge {
+    display: none;
+    position: absolute;
+    right: 15px;
+    background: #E74C3C;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.has-unread .notif-badge { display: block; }
+
+/* Footer sidebar (logout) */
 .sidebar-footer {
     padding: 0 25px;
     margin-bottom: 10px;
@@ -139,49 +160,207 @@ header {
 .logout-btn {
     display: flex;
     align-items: center;
-    color: #999;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.2s;
-    background: none;
-    border: none;
-    cursor: pointer;
     width: 100%;
     padding: 0;
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s;
 }
 
-.logout-btn:hover { color: var(--primary-blue); }
-
-/* --- MAIN CONTENT --- */
-.main-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 40px;
-    background-color: #f4f6f9;
-}
-
-.page-title {
-    font-size: 1.6rem;
-    font-weight: 700;
+.logout-btn:hover {
     color: var(--primary-blue);
-    margin-bottom: 8px;
 }
 
-.page-subtitle {
-    font-size: 0.95rem;
-    color: var(--text-light);
-    margin-bottom: 32px;
+/* -----------------------------------------------------------
+   AREA CONTENUTO
+----------------------------------------------------------- */
+.content {
+    flex: 1;
+    padding: 40px 60px;
+    overflow-y: auto;
 }
 
-/* --- PLACEHOLDER CARD --- */
-.placeholder-card {
-    background-color: #ffffff;
+.page-header { margin-bottom: 35px; }
+
+.page-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.page-header h1 { font-size: 2rem; font-weight: 700; }
+.page-header p  { color: var(--text-gray); font-size: 1rem; }
+
+/* Pulsante header (es. "Crea Conferenza", "Dashboard Membro PC") */
+.btn-crea {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--primary-blue);
+    color: var(--white);
+    border: none;
     border-radius: var(--radius);
-    padding: 40px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    color: var(--text-light);
-    font-size: 0.95rem;
-    border-left: 4px solid var(--primary-gold);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+
+.btn-crea:hover { filter: brightness(1.15); }
+
+/* -----------------------------------------------------------
+   TABELLA DATI (struttura comune)
+----------------------------------------------------------- */
+.list-container {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.list-title-bar {
+    background: linear-gradient(90deg, #476a91 0%, #365373 100%);
+    padding: 16px 25px;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Intestazione colonne — ogni dashboard sovrascrive grid-template-columns se necessario */
+.table-head {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr 1fr 1.3fr;
+    padding: 18px 25px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #1e293b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: #EEEEEE;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Righe — .conf-row, .art-row, .data-row condividono la stessa base */
+.conf-row,
+.art-row,
+.data-row {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr 1fr 1.3fr;
+    align-items: center;
+    padding: 22px 25px;
+    border-bottom: 1px solid var(--border-color);
+    transition: background 0.1s;
+}
+
+.conf-row:last-child,
+.art-row:last-child,
+.data-row:last-child { border-bottom: none; }
+
+.conf-row:hover,
+.art-row:hover,
+.data-row:hover { background: #F8FAFC; }
+
+/* Info primaria nella prima colonna */
+.conf-info h3,
+.art-info h3,
+.row-info h3 { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+
+.conf-info p,
+.art-info p,
+.row-info p  { font-size: 0.85rem; color: var(--text-gray); }
+
+/* Testo data scadenza */
+.scadenza {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+/* -----------------------------------------------------------
+   BADGE
+----------------------------------------------------------- */
+.badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.badge-purple { background: #F3F0FF; color: #6B21A8; border-color: #D8B4FE; }
+.badge-blue   { background: #E0F2FE; color: #0369A1; border-color: #7DD3FC; }
+.badge-green  { background: #F0FDF4; color: #166534; border-color: #BBF7D0; }
+
+/* -----------------------------------------------------------
+   INDICATORI DI STATO (pallini colorati)
+----------------------------------------------------------- */
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.dot        { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.dot-green  { background: #22C55E; box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15); }
+.dot-yellow { background: #EAB308; box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.15); }
+.dot-blue   { background: #3B82F6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
+
+/* -----------------------------------------------------------
+   PULSANTI AZIONE
+----------------------------------------------------------- */
+.actions { display: flex; gap: 10px; }
+
+.btn {
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: filter 0.2s;
+    flex: 1;
+    text-align: center;
+}
+
+.btn-primary   { background: #476A91; color: var(--white); box-shadow: 0 2px 4px rgba(71,106,145,0.2); }
+.btn-secondary { background: #CBD5E1; color: #334155; }
+.btn:hover     { filter: brightness(0.9); }
+
+/* -----------------------------------------------------------
+   STATO VUOTO
+----------------------------------------------------------- */
+#empty-state {
+    display: none;
+    padding: 100px 40px;
+    text-align: center;
+    background: var(--white);
+}
+
+#empty-state svg {
+    width: 64px;
+    height: 64px;
+    color: var(--text-gray);
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+#empty-state h2 {
+    font-size: 1.25rem;
+    color: var(--text-gray);
+    font-weight: 600;
 }
 
 /* -----------------------------------------------------------
@@ -189,34 +368,7 @@ header {
 ----------------------------------------------------------- */
 footer {
     height: 30px;
-    background-color: #f4f6f9;
+    background-color: var(--bg-main);
     border-top: 1px solid var(--border-color);
     flex-shrink: 0;
-}
-
-/* -----------------------------------------------------------
-   RESPONSIVE
------------------------------------------------------------ */
-@media (max-width: 768px) {
-    .layout-container { flex-direction: column; }
-
-    .sidebar {
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        padding: 10px;
-        border-bottom: 1px solid var(--border-color);
-        border-right: none;
-    }
-
-    .sidebar-menu {
-        display: flex;
-        gap: 5px;
-    }
-
-    .menu-item span { display: none; }
-    .icon { margin-right: 0; }
-    .sidebar-footer { display: none; }
-
-    .main-content { padding: 20px; }
 }
