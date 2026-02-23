@@ -127,3 +127,21 @@ export async function logout(id_utente: string): Promise<void> {
         [id_utente]
     );
 }
+
+/**
+ * Cerca un utente per email verificando che abbia ruolo 'revisore'.
+ * Restituisce id_utente, nome, cognome se trovato, null altrimenti.
+ */
+export async function findRevisoreByEmail(
+    email: string
+): Promise<{ id_utente: string; nome: string; cognome: string } | null> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        `SELECT id_utente, nome, cognome
+         FROM utente
+         WHERE email = ? AND role = 'revisore'`,
+        [email]
+    );
+    return rows.length > 0
+        ? (rows[0] as { id_utente: string; nome: string; cognome: string })
+        : null;
+}

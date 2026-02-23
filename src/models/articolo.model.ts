@@ -48,15 +48,14 @@ export async function create(articolo: Omit<Articolo, 'media_voti' | 'stato'>): 
 }
 
 /**
- * Imposta lo stato dell'articolo a 'ACCETTATO'.
- * Restituisce true se la riga è stata aggiornata, false se l'id non esiste.
+ * Aggiorna il campo media_voti di un articolo con il valore calcolato.
+ * Viene chiamato ogni volta che una nuova revisione viene creata.
  */
-export async function updateStatoAccettato(id_articolo: string): Promise<boolean> {
-    const [result] = await pool.execute<ResultSetHeader>(
-        "UPDATE articolo SET stato = 'ACCETTATO' WHERE id_articolo = ?",
-        [id_articolo]
+export async function updateMediaVoti(id_articolo: string, media: number): Promise<void> {
+    await pool.execute<ResultSetHeader>(
+        'UPDATE articolo SET media_voti = ? WHERE id_articolo = ?',
+        [media, id_articolo]
     );
-    return result.affectedRows > 0;
 }
 
 /**
@@ -125,4 +124,26 @@ export async function findByConferenza(id_conferenza: string): Promise<ArticoloS
         [id_conferenza]
     );
     return rows as ArticoloSenzaDocumento[];
+}
+
+/**
+ * Restituisce tutti gli articoli di una conferenza con solo i campi
+ * necessari all'editore: id, titolo e media voti.
+ * Nessun filtro sullo stato — l'esclusione degli articoli già pubblicati
+ * avviene nel controller tramite isPubblicato().
+ */
+export interface ArticoloPerEditore {
+    id_articolo: string;
+    titolo:      string;
+    media_voti:  number;
+}
+
+export async function findByConferenzaPerEditore(id_conferenza: string): Promise<ArticoloPerEditore[]> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        `SELECT id_articolo, titolo, media_voti
+         FROM articolo
+         WHERE id_conferenza = ?`,
+        [id_conferenza]
+    );
+    return rows as ArticoloPerEditore[];
 }

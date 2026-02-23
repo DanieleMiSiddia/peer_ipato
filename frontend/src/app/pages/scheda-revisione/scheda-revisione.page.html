@@ -1,0 +1,129 @@
+<ion-content [fullscreen]="true">
+    <div class="page-wrapper">
+
+        <header class="app-header">
+            <img src="assets/Logo.jpeg" alt="Logo" class="logo-img">
+            <div class="brand-name">Peer-<span>ipato</span></div>
+        </header>
+
+        <main class="main-content">
+            <div class="container">
+
+                <div class="top-wrapper">
+                    <div class="title-section">
+                        <h1>Scheda Valutazione Articolo</h1>
+                        <p>Revisione di: <strong>{{ idArticolo }}</strong></p>
+                    </div>
+                    <button class="btn btn-download" (click)="scaricaPDF()" [disabled]="downloading">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        {{ downloading ? 'Download...' : 'Scarica PDF' }}
+                    </button>
+                </div>
+
+                @if (errorMessage) {
+                    <div class="error-alert">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span>{{ errorMessage }}</span>
+                    </div>
+                }
+
+                <!-- Commento per gli Autori -->
+                <div class="card">
+                    <div class="section-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        Commento per gli Autori
+                    </div>
+                    <div class="form-group">
+                        <textarea [(ngModel)]="commento"
+                            placeholder="Inserisci qui i tuoi commenti tecnici dettagliati per gli autori...">
+                        </textarea>
+                        <p class="help-text">Questo commento sarà visibile agli autori dell'articolo.</p>
+                    </div>
+                </div>
+
+                <!-- Valutazione Globale + Competenza -->
+                <div class="evaluation-grid">
+
+                    <div class="card">
+                        <div class="section-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                            Valutazione Globale
+                        </div>
+                        <div class="stars">
+                            @for (s of starsArray; track s) {
+                                <span class="star"
+                                    [class.active]="s <= valutazione"
+                                    [class.hover]="s <= starHover"
+                                    (mouseenter)="starHover = s"
+                                    (mouseleave)="starHover = 0"
+                                    (click)="valutazione = s">★</span>
+                            }
+                            <span class="star-score">{{ valutazione }} / 5</span>
+                        </div>
+                        <p class="eval-info">1: Scarso &nbsp;·&nbsp; 5: Eccellente</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="section-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                            Autovalutazione Competenza
+                        </div>
+                        <div class="vote-display">
+                            <span class="vote-label">Base</span>
+                            <span class="vote-value">{{ votoCompetenza }}</span>
+                            <span class="vote-label">Esperto</span>
+                        </div>
+                        <input type="range" min="1" max="3" step="1"
+                            [(ngModel)]="votoCompetenza" class="vote-slider">
+                        <div class="range-labels">
+                            <span>Base (1)</span>
+                            <span>Intermedia (2)</span>
+                            <span>Esperto (3)</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Azioni -->
+                <div class="actions">
+                    <button class="btn btn-annulla" (click)="goBack()">Annulla</button>
+                    <button class="btn btn-crea" (click)="submit()" [disabled]="loading">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        {{ loading ? 'Invio...' : 'Invia Revisione' }}
+                    </button>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Success overlay -->
+    @if (showSuccess) {
+        <div class="success-overlay">
+            <div class="success-card">
+                <div class="success-icon">✓</div>
+                <h2>Revisione Inviata con Successo</h2>
+                <p>La tua valutazione è stata registrata correttamente.</p>
+                <button class="btn btn-crea" (click)="goBack()">Torna Indietro</button>
+            </div>
+        </div>
+    }
+
+</ion-content>

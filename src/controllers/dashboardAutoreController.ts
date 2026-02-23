@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import * as ConferenzaModel from '../models/conferenza.model';
 import * as ArticoloModel   from '../models/articolo.model';
-import * as UtenteModel     from '../models/utente.model';
-
 // ============================================================
 // TIPO: dati di una conferenza in fase di sottomissione
 // restituiti al frontend della DashboardAutore
@@ -13,26 +11,6 @@ interface ConferenzaAutoreItem {
     data_fine_sottomissione: Date;
     topic:                  string;
 }
-
-// ============================================================
-// CONTROLLER: restituisce il profilo dell'utente autenticato
-// ============================================================
-export const getProfilo = async (req: Request, res: Response) => {
-    try {
-        const id_utente = req.user!.id_utente;
-
-        const utente = await UtenteModel.findById(id_utente);
-        if (!utente) {
-            return res.status(404).json({ message: 'Utente non trovato' });
-        }
-
-        res.status(200).json({ utente });
-
-    } catch (error) {
-        console.error('Errore recupero profilo:', error);
-        res.status(500).json({ message: 'Errore interno del server' });
-    }
-};
 
 // ============================================================
 // CONTROLLER: restituisce le conferenze in fase di sottomissione

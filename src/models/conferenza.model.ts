@@ -174,3 +174,61 @@ export async function findConferenzeByChair(id_utente: string): Promise<Conferen
     );
     return rows as Conferenza[];
 }
+
+/**
+ * Restituisce tutte le conferenze di cui l'utente è editore.
+ * Usata dalla Dashboard Editore per popolare la lista delle conferenze gestite.
+ */
+export async function findConferenzeByEditore(id_editore: string): Promise<Conferenza[]> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        `SELECT
+            id_conferenza,
+            data_inizio_conferenza,
+            data_fine_conferenza,
+            data_inizio_revisione,
+            data_fine_revisione,
+            data_inizio_sottomissione,
+            data_fine_sottomissione,
+            numero_articoli,
+            nome,
+            topic,
+            id_chair,
+            id_editore
+         FROM conferenza
+         WHERE id_editore = ?`,
+        [id_editore]
+    );
+    return rows as Conferenza[];
+}
+
+/**
+ * Restituisce il numero massimo di articoli pubblicabili per la conferenza
+ * a cui appartiene l'articolo dato. Usato dal controller di pubblicazione
+ * per verificare se il limite è già stato raggiunto.
+ */
+export async function getLimiteByArticolo(id_articolo: string): Promise<number> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        `SELECT c.numero_articoli
+         FROM articolo a
+         JOIN conferenza c ON a.id_conferenza = c.id_conferenza
+         WHERE a.id_articolo = ?`,
+        [id_articolo]
+    );
+    return rows.length > 0 ? (rows[0].numero_articoli as number) : 0;
+}
+
+/**
+ * Verifica se un revisore è già membro PC di una conferenza.
+ * Restituisce true se esiste la relazione in membro_pc, false altrimenti.
+ */
+export async function isMembroPC(
+    id_conferenza: string,
+    id_revisore: string
+): Promise<boolean> {
+    const [rows] = await pool.execute<RowDataPacket[]>(
+        `SELECT 1 FROM membro_pc
+         WHERE id_conferenza = ? AND id_revisore = ?`,
+        [id_conferenza, id_revisore]
+    );
+    return rows.length > 0;
+}

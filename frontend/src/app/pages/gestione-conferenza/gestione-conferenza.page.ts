@@ -47,6 +47,10 @@ export class GestioneConferenzaPage implements OnInit {
         this.router.navigate(['/aggiungi-co-chair'], { queryParams: { id: this.idConferenza } });
     }
 
+    goToArticoliPubblicati(): void {
+        this.router.navigate(['/lista-articoli-pubblicati'], { queryParams: { id: this.idConferenza } });
+    }
+
     goBack(): void {
         this.router.navigate(['/dashboard-chair']);
     }

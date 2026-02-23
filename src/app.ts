@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
 import pool from './config/database';
 import authRoutes from './routes/authRoutes';
 import modRoutes from './routes/modRoutes';
@@ -10,6 +9,7 @@ import dashboardChairRoutes    from './routes/dashboardChairRoutes';
 import dashboardRevisoreRoutes  from './routes/dashboardRevisoreRoutes';
 import dashboardMembroPCRoutes  from './routes/dashboardMembroPCRoutes';
 import dashboardAutoreRoutes    from './routes/dashboardAutoreRoutes';
+import dashboardEditoreRoutes   from './routes/dashboardEditoreRoutes';
 import articoloRoutes           from './routes/articoloRoutes';
 
 dotenv.config();
@@ -24,9 +24,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// File statici (frontend)
-app.use(express.static(path.join(__dirname, '..', 'public')));
-
 // Routes API
 app.use('/api/auth', authRoutes);
 app.use('/api/utente', modRoutes);
@@ -35,12 +32,8 @@ app.use('/api/dashboard-chair',    dashboardChairRoutes);
 app.use('/api/dashboard-revisore', dashboardRevisoreRoutes);
 app.use('/api/dashboard-membro-pc', dashboardMembroPCRoutes);
 app.use('/api/dashboard-autore',   dashboardAutoreRoutes);
+app.use('/api/dashboard-editore',  dashboardEditoreRoutes);
 app.use('/api/articolo',           articoloRoutes);
-
-// Route principale: serve la pagina di autenticazione
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'pages', 'auth.html'));
-});
 
 // Test connessione al database
 async function testDatabaseConnection(): Promise<void> {

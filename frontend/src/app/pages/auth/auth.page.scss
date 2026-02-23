@@ -129,14 +129,24 @@ ion-content {
     }
 }
 
-ion-input {
-    --border-color: #cccccc;
-    --border-radius: 6px;
-    --padding-start: 15px;
-    --padding-end: 15px;
-    --placeholder-color: #999;
-    --highlight-color-focused: #1B365D;
+.form-input {
+    width: 100%;
+    padding: 11px 15px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
     font-size: 0.95rem;
+    font-family: inherit;
+    color: #111;
+    background: white;
+    outline: none;
+    box-sizing: border-box;
+
+    &::placeholder { color: #999; }
+
+    &:focus {
+        border-color: #1B365D;
+        box-shadow: 0 0 0 3px rgba(27, 54, 93, 0.1);
+    }
 }
 
 .forgot-password {

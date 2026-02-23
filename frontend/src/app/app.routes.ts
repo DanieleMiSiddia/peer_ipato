@@ -58,6 +58,42 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/registrazione/registrazione.page').then(m => m.RegistrazionePage),
   },
   {
+    path: 'dashboard-revisore',
+    loadComponent: () => import('./pages/dashboard-revisore/dashboard-revisore.page').then(m => m.DashboardRevisorePage),
+  },
+  {
+    path: 'dashboard-membro-pc',
+    loadComponent: () => import('./pages/dashboard-membro-pc/dashboard-membro-pc.page').then(m => m.DashboardMembroPCPage),
+  },
+  {
+    path: 'lista-articoli-pc',
+    loadComponent: () => import('./pages/lista-articoli-pc/lista-articoli-pc.page').then(m => m.ListaArticoliPCPage),
+  },
+  {
+    path: 'assegna-sotto-revisore',
+    loadComponent: () => import('./pages/assegna-sotto-revisore/assegna-sotto-revisore.page').then(m => m.AssegnaSottoRevisorePage),
+  },
+  {
+    path: 'scheda-revisione',
+    loadComponent: () => import('./pages/scheda-revisione/scheda-revisione.page').then(m => m.SchedaRevisionePage),
+  },
+  {
+    path: 'dashboard-editore',
+    loadComponent: () => import('./pages/dashboard-editore/dashboard-editore.page').then(m => m.DashboardEditorePage),
+  },
+  {
+    path: 'lista-articoli-editore',
+    loadComponent: () => import('./pages/lista-articoli-editore/lista-articoli-editore.page').then(m => m.ListaArticoliEditorePage),
+  },
+  {
+    path: 'visualizza-revisioni',
+    loadComponent: () => import('./pages/visualizza-revisioni/visualizza-revisioni.page').then(m => m.VisualizzaRevisioniPage),
+  },
+  {
+    path: 'lista-articoli-pubblicati',
+    loadComponent: () => import('./pages/lista-articoli-pubblicati/lista-articoli-pubblicati.page').then(m => m.ListaArticoliPubblicatiPage),
+  },
+  {
     path: '',
     redirectTo: 'auth',
     pathMatch: 'full',

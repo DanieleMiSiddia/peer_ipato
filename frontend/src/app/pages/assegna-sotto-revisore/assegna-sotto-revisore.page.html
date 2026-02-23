@@ -1,0 +1,68 @@
+<ion-content [fullscreen]="true">
+    <div class="page-wrapper">
+
+        <header class="app-header">
+            <div class="header-brand">
+                <img src="assets/Logo.jpeg" alt="Logo" class="header-logo-img">
+                <div class="brand-name">Peer-<span>ipato</span></div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="content-wrapper">
+
+                <div class="page-header">
+                    <h1>Assegna Sotto-revisore</h1>
+                    <p>Assegna un revisore esterno al Program Committee per la revisione di questo articolo.</p>
+                </div>
+
+                <div class="form-card">
+                    @if (errorMessage) {
+                        <div class="form-message error">{{ errorMessage }}</div>
+                    }
+                    @if (successMessage) {
+                        <div class="form-message success">{{ successMessage }}</div>
+                    }
+
+                    <div class="form-group">
+                        <label class="form-label">Email Revisore</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                            <input type="email" class="email-input" [(ngModel)]="email"
+                                placeholder="nome.cognome@esempio.it"
+                                autocomplete="off">
+                        </div>
+                        <p class="help-text">Inserisci l'indirizzo email dell'utente registrato come revisore.</p>
+                    </div>
+
+                    <div class="card-actions">
+                        <button class="btn btn-secondary" (click)="goBack()">Annulla</button>
+                        <button class="btn btn-primary" (click)="submit()" [disabled]="loading">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"></path>
+                                <line x1="20" y1="8" x2="20" y2="14"></line>
+                                <line x1="17" y1="11" x2="23" y2="11"></line>
+                            </svg>
+                            {{ loading ? 'Assegnazione...' : 'Assegna' }}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-icon-wrapper">
+                        <svg class="info-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    </div>
+                    <div class="info-content">
+                        <strong>Informazioni sui Sotto-revisori</strong>
+                        <p>Un sotto-revisore è un revisore esterno al Program Committee incaricato di valutare un articolo specifico. L'utente deve essere registrato nel sistema con il ruolo di Revisore e non deve essere già membro PC di questa conferenza.</p>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+</ion-content>

@@ -1,0 +1,285 @@
+ion-content {
+    --background: #f4f6f9;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+// ── Header ──────────────────────────────────────────────────
+.app-header {
+    height: 60px;
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.logo-img   { height: 35px; margin-right: 12px; }
+
+.brand-name {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    color: #1e3a5f;
+    cursor: default;
+
+    span { color: #C59343; }
+}
+
+// ── Main ────────────────────────────────────────────────────
+.main-content {
+    flex: 1;
+    background-color: #f4f6f9;
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container { width: 100%; max-width: 950px; }
+
+// ── Top wrapper ──────────────────────────────────────────────
+.top-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+}
+
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: #1f2937;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &:hover:not(:disabled) { background: #f9fafb; }
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+// ── Titolo ───────────────────────────────────────────────────
+.title-section {
+    h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    p  { color: #6b7280; }
+}
+
+// ── Card ────────────────────────────────────────────────────
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+    border: 1px solid #e5e7eb;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    font-weight: 700;
+    color: #1e3a5f;
+
+    svg { color: #3b5d82; width: 20px; height: 20px; flex-shrink: 0; }
+}
+
+// ── Form ────────────────────────────────────────────────────
+.form-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+
+label { font-size: 0.85rem; font-weight: 600; color: #1f2937; }
+
+.help-text { font-size: 0.8rem; color: #6b7280; margin-top: 6px; }
+
+// ── Evaluation grid ──────────────────────────────────────────
+.evaluation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 0;
+}
+
+// ── Stelle ───────────────────────────────────────────────────
+.stars {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 12px 0 8px;
+    font-size: 1.8rem;
+    color: #d1d5db;
+}
+
+.star {
+    cursor: pointer;
+    transition: color 0.15s, transform 0.1s;
+    line-height: 1;
+
+    &.active { color: #3b5d82; }
+    &.hover  { color: #5a7fa8; }
+
+    &:hover { transform: scale(1.15); }
+}
+
+.star-score {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-left: 6px;
+}
+
+.eval-info { font-size: 0.75rem; color: #9ca3af; }
+
+// ── Slider voti ──────────────────────────────────────────────
+.vote-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.vote-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #3b5d82;
+    line-height: 1;
+}
+
+.vote-label { font-size: 0.75rem; color: #9ca3af; }
+
+.vote-slider {
+    width: 100%;
+    height: 6px;
+    accent-color: #3b5d82;
+    cursor: pointer;
+    margin: 4px 0;
+}
+
+.vote-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    padding: 0 2px;
+}
+
+// ── Textarea ─────────────────────────────────────────────────
+textarea {
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    font-family: inherit;
+    background: white;
+    resize: vertical;
+    min-height: 160px;
+    line-height: 1.6;
+
+    &:focus {
+        border-color: #3b5d82;
+        box-shadow: 0 0 0 3px rgba(59, 93, 130, 0.1);
+    }
+
+    &::placeholder { color: #9ca3af; }
+}
+
+// ── Errore ───────────────────────────────────────────────────
+.error-alert {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #ef4444;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+// ── Azioni ───────────────────────────────────────────────────
+.actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 20px; }
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.btn-annulla { background: white; border: 1px solid #e5e7eb !important; color: #1f2937; }
+.btn-crea    { background: #3b5d82; color: white; &:hover:not(:disabled) { background: #2d4663; } }
+
+// ── Success overlay ──────────────────────────────────────────
+.success-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    backdrop-filter: blur(4px);
+}
+
+.success-card {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    animation: popIn 0.3s ease-out;
+
+    h2 { margin-bottom: 10px; color: #1e3a5f; }
+    p  { color: #6b7280; margin-bottom: 24px; font-size: 0.95rem; }
+
+    .btn-crea { margin: 0 auto; width: 100%; justify-content: center; }
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    background: #10b981;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 32px;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+// ── Responsive ──────────────────────────────────────────────
+@media (max-width: 768px) {
+    .form-grid { grid-template-columns: 1fr; }
+}

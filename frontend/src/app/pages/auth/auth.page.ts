@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { IonContent, IonInput, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonButton } from '@ionic/angular/standalone';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
     templateUrl: './auth.page.html',
     styleUrls: ['./auth.page.scss'],
     standalone: true,
-    imports: [CommonModule, FormsModule, RouterLink, IonContent, IonInput, IonButton]
+    imports: [CommonModule, FormsModule, RouterLink, IonContent, IonButton]
 })
 export class AuthPage {
     email    = '';
@@ -20,6 +20,14 @@ export class AuthPage {
     successMessage = '';
 
     constructor(private authService: AuthService, private router: Router) {}
+
+    ionViewWillEnter(): void {
+        this.loading        = false;
+        this.errorMessage   = '';
+        this.successMessage = '';
+        this.email          = '';
+        this.password       = '';
+    }
 
     onLogin(): void {
         this.loading        = true;

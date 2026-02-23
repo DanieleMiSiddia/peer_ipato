@@ -1,0 +1,124 @@
+<ion-content [fullscreen]="true">
+    <div class="page-wrapper">
+
+        <header class="app-header">
+            <div class="header-content">
+                <img src="assets/Logo.jpeg" alt="Logo Peer-ipato" class="logo-img">
+                <div class="brand-name">Peer-<span>ipato</span></div>
+            </div>
+            <span class="header-user-name">{{ nomeUtente }}</span>
+        </header>
+
+        <main class="main-content">
+            <div class="container">
+
+                <div class="page-header">
+                    <div class="page-header-top">
+                        <h1>Gestione Pubblicazione</h1>
+                        <button class="btn-back" (click)="goBack()">
+                            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                            Torna Indietro
+                        </button>
+                    </div>
+                    <p>Articoli sottomessi a questa conferenza che non sono ancora stati pubblicati.</p>
+                </div>
+
+                @if (successMsg) {
+                    <div class="success-alert">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span>{{ successMsg }}</span>
+                    </div>
+                }
+
+                @if (errorMsg) {
+                    <div class="error-alert">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <span>{{ errorMsg }}</span>
+                    </div>
+                }
+
+                @if (!isEmpty) {
+                    <div class="list-container">
+                        <div class="list-title-bar">
+                            <span>{{ articoli.length }} ARTICOLI DA PUBBLICARE</span>
+                        </div>
+
+                        <div class="table-head">
+                            <div>Titolo dell'Articolo</div>
+                            <div>Media Voto</div>
+                            <div class="col-actions">Azioni</div>
+                        </div>
+
+                        @for (art of articoli; track art.id_articolo) {
+                            <div class="article-row">
+                                <div class="article-info">
+                                    <h3>{{ art.titolo }}</h3>
+                                    <p>ID: {{ art.id_articolo }}</p>
+                                </div>
+                                <div class="media-voto">
+                                    <span class="voto-badge">{{ art.media_voti | number:'1.2-2' }}</span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-secondary" (click)="goToRevisioni(art.id_articolo)">
+                                        Visualizza Revisioni
+                                    </button>
+                                    <button class="btn btn-secondary"
+                                            (click)="scaricaPDF(art.id_articolo)"
+                                            [disabled]="downloadingId === art.id_articolo">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 7h14v2H5v-2z"/>
+                                        </svg>
+                                        {{ downloadingId === art.id_articolo ? 'Download...' : 'Scarica PDF' }}
+                                    </button>
+                                    <button class="btn btn-primary" (click)="pubblica(art.id_articolo)">
+                                        Pubblica
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+                @if (isEmpty) {
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                        <h2>Nessun articolo da pubblicare per questa conferenza.</h2>
+                    </div>
+                }
+
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Overlay conferma pubblicazione -->
+    @if (articoloDaPubblicare) {
+        <div class="confirm-overlay">
+            <div class="confirm-card">
+                <div class="confirm-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h2>Pubblica Articolo</h2>
+                <p>Sei sicuro di voler pubblicare l'articolo:</p>
+                <p class="article-id-preview">{{ articoloDaPubblicare }}</p>
+                <p class="confirm-warning">L'articolo sarà rimosso dalla lista e registrato come pubblicato.</p>
+                <div class="confirm-actions">
+                    <button class="btn-annulla" (click)="annullaPublicazione()" [disabled]="publishLoading">
+                        Annulla
+                    </button>
+                    <button class="btn-conferma" (click)="confermaPublicazione()" [disabled]="publishLoading">
+                        {{ publishLoading ? 'Pubblicazione...' : 'Conferma' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+</ion-content>

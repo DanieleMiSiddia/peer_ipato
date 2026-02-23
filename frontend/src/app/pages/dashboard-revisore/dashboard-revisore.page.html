@@ -1,0 +1,96 @@
+<ion-content [fullscreen]="true">
+    <div class="page-wrapper">
+
+        <header class="app-header">
+            <div class="header-content">
+                <img src="assets/Logo.jpeg" alt="Logo Peer-ipato" class="logo-img">
+                <div class="brand-name">Peer-<span>ipato</span></div>
+            </div>
+            <span class="header-user-name">{{ nomeUtente }}</span>
+        </header>
+
+        <div class="main-layout">
+
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <a class="nav-item active">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+                        Dashboard
+                    </a>
+                    <a routerLink="/profilo" class="nav-item">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        Profilo
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <button class="logout-btn" (click)="logout()">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+                        Logout
+                    </button>
+                </div>
+            </aside>
+
+            <section class="content">
+                <div class="page-header">
+                    <div class="page-header-top">
+                        <h1>Dashboard Revisore</h1>
+                        <button class="btn-crea" (click)="goToMembroPC()">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                            Dashboard Membro PC
+                        </button>
+                    </div>
+                    <p>Articoli assegnati per la revisione — scadenze e fonte di assegnazione</p>
+                </div>
+
+                @if (!isEmpty) {
+                    <div class="list-container">
+                        <div class="list-title-bar">
+                            <span>Articoli da Revisionare</span>
+                            <span class="count-label">{{ articoli.length }} ARTICOLI</span>
+                        </div>
+
+                        <div class="table-head">
+                            <div>Articolo</div>
+                            <div>Data Scadenza</div>
+                            <div>Fonte</div>
+                            <div>Azioni</div>
+                        </div>
+
+                        @for (art of articoli; track art.id_articolo) {
+                            <div class="art-row">
+                                <div class="art-info">
+                                    <h3>{{ art.titolo }}</h3>
+                                    <p>{{ art.id_articolo }}</p>
+                                </div>
+                                <div class="scadenza">{{ formatData(art.data_scadenza) }}</div>
+                                <div>
+                                    <span class="badge" [ngClass]="getBadgeSorgente(art.sorgente)">
+                                        {{ art.sorgente }}
+                                    </span>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary" (click)="goToScheda(art.id_articolo)">
+                                        Scrivi Revisione
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+                @if (isEmpty) {
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <h2>Non ci sono articoli assegnati al momento.</h2>
+                    </div>
+                }
+
+            </section>
+        </div>
+    </div>
+</ion-content>

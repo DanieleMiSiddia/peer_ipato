@@ -9,6 +9,12 @@ export interface ConferenzaItem {
     stato:         string;
 }
 
+export interface ArticoloPubblicatoChair {
+    id_articolo: string;
+    titolo:      string;
+    media_voti:  number;
+}
+
 interface ConferenzeResponse {
     conferenze: ConferenzaItem[];
 }
@@ -47,5 +53,12 @@ export class DashboardChairService {
         return this.http.post<{ id_conferenza: string }>(`${this.apiUrl}/dashboard-chair/conferenze`, body, {
             headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
         });
+    }
+
+    getArticoliPubblicati(token: string, idConferenza: string): Observable<{ articoli: ArticoloPubblicatoChair[] }> {
+        return this.http.get<{ articoli: ArticoloPubblicatoChair[] }>(
+            `${this.apiUrl}/dashboard-chair/conferenze/${idConferenza}/articoli-pubblicati`,
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
     }
 }

@@ -8,7 +8,7 @@
 --   #3  Aggiunto stato RIFIUTATO nel CHECK di articolo
 --   #5  Rimossi ID ridondanti dalle tabelle di specializzazione
 --   #6  media_voti INT → DECIMAL(4,2)
---   #7  notifiche.id_notifica → AUTO_INCREMENT
+--   #7  Rimosse tabelle inattive: notifiche, gestisce
 --   #8  Ampliati VARCHAR troppo corti
 --   #9  Naming convention normalizzata a snake_case
 --   #10 membro_pc ridisegnato: non più ruolo utente ma relazione conferenza↔revisore
@@ -117,18 +117,6 @@ CREATE TABLE revisione (
 );
 
 -- ============================================================
--- TABELLA: NOTIFICHE
--- ============================================================
-CREATE TABLE notifiche (
-    id_notifica INT AUTO_INCREMENT,
-    tipo_notifica SMALLINT NOT NULL,
-    data_notifica DATE NOT NULL,
-    id_utente CHAR(5) NOT NULL,
-    CONSTRAINT notifica_pk PRIMARY KEY (id_notifica),
-    CONSTRAINT notifiche_fk FOREIGN KEY (id_utente) REFERENCES utente(id_utente) ON DELETE NO ACTION ON UPDATE CASCADE
-);
-
--- ============================================================
 -- TABELLE ASSOCIATIVE (relazioni N-M)
 -- ============================================================
 
@@ -139,16 +127,6 @@ CREATE TABLE membro_pc (
     PRIMARY KEY (id_conferenza, id_revisore),
     CONSTRAINT membro_pc_conferenza_fk FOREIGN KEY (id_conferenza) REFERENCES conferenza(id_conferenza) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT membro_pc_revisore_fk   FOREIGN KEY (id_revisore)   REFERENCES revisore(id_utente)      ON DELETE CASCADE ON UPDATE CASCADE
-);
-
--- Gestione revisioni (revisore <-> revisione)
-CREATE TABLE gestisce (
-    id_revisore CHAR(5),
-    id_review CHAR(6),
-    motivo VARCHAR(30) NOT NULL,
-    CONSTRAINT gest_pk PRIMARY KEY (id_revisore, id_review),
-    CONSTRAINT gest_rev_fk FOREIGN KEY (id_review) REFERENCES revisione(id_review) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT gest_revisore_fk FOREIGN KEY (id_revisore) REFERENCES revisore(id_utente) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- Assegnazione articoli a revisori (revisore <-> articolo)
@@ -170,16 +148,6 @@ CREATE TABLE pubblicazione (
     PRIMARY KEY (codice_pubblicazione),
     CONSTRAINT pubb_editore_fk FOREIGN KEY (id_editore) REFERENCES editore(id_utente) ON DELETE NO ACTION ON UPDATE CASCADE,
     CONSTRAINT pubb_articolo_fk FOREIGN KEY (id_articolo) REFERENCES articolo(id_articolo) ON DELETE NO ACTION ON UPDATE CASCADE
-);
-
--- Offerte di revisione / bidding (articolo <-> revisore)
-CREATE TABLE offerta (
-    id_articolo CHAR(10),
-    id_revisore CHAR(5),
-    data_scadenza DATE NOT NULL,
-    PRIMARY KEY (id_articolo, id_revisore),
-    CONSTRAINT offerta_articolo_fk FOREIGN KEY (id_articolo) REFERENCES articolo(id_articolo) ON DELETE NO ACTION ON UPDATE CASCADE,
-    CONSTRAINT offerta_revisore_fk FOREIGN KEY (id_revisore) REFERENCES revisore(id_utente) ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
 -- Co-chair di conferenza (conferenza <-> chair)

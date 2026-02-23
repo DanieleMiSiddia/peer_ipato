@@ -1,0 +1,170 @@
+ion-content {
+    --background: #F4F6F9;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+// ── Header ──────────────────────────────────────────────────
+.app-header {
+    height: 60px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.header-content { display: flex; align-items: center; gap: 12px; }
+.logo-img       { height: 35px; width: auto; }
+
+.brand-name {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #1B365D;
+    cursor: default;
+    span { color: #C59343; }
+}
+
+.header-user-name { font-size: 0.9rem; font-weight: 500; color: #6B7280; }
+
+// ── Main ────────────────────────────────────────────────────
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.container { width: 100%; max-width: 1000px; }
+
+// ── Page header ───────────────────────────────────────────────
+.page-header { margin-bottom: 35px; }
+
+.page-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.page-header h1 { font-size: 2rem; font-weight: 700; }
+.page-header p  { color: #6B7280; font-size: 1rem; }
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    background-color: #1B365D;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+    font-family: inherit;
+
+    svg { width: 16px; height: 16px; fill: currentColor; }
+    &:hover { background-color: #152d4e; }
+}
+
+// ── Tabella ─────────────────────────────────────────────────
+.list-container {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+.list-title-bar {
+    background: linear-gradient(90deg, #476a91 0%, #365373 100%);
+    padding: 16px 25px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.table-head {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.6fr;
+    padding: 18px 25px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #1e293b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: #EEEEEE;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.col-actions { text-align: right; }
+
+.article-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.6fr;
+    align-items: center;
+    padding: 22px 25px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background 0.1s;
+
+    &:last-child { border-bottom: none; }
+    &:hover      { background: #F8FAFC; }
+}
+
+.article-info {
+    h3 { font-size: 1rem; font-weight: 700; color: #333333; margin-bottom: 4px; }
+    p  { font-size: 0.85rem; color: #6B7280; }
+}
+
+.stato-text { font-size: 0.9rem; color: #333333; font-weight: 500; }
+
+// ── Azioni ───────────────────────────────────────────────────
+.actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+.btn {
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: filter 0.2s;
+    font-family: inherit;
+
+    &:hover:not(:disabled) { filter: brightness(0.9); }
+    &:disabled { opacity: 0.45; cursor: not-allowed; }
+}
+
+.btn-primary   { background: #476A91; color: #ffffff; }
+.btn-secondary { background: #E2E8F0; color: #1e293b; }
+
+// ── Stato vuoto ──────────────────────────────────────────────
+.empty-state {
+    padding: 100px 40px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+
+    svg {
+        width: 64px;
+        height: 64px;
+        color: #6B7280;
+        margin: 0 auto 20px;
+        opacity: 0.5;
+        display: block;
+    }
+
+    h2 { font-size: 1.25rem; color: #6B7280; font-weight: 600; }
+}

@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import * as ConferenzaModel from '../models/conferenza.model';
-import { Conferenza } from '../models/conferenza.model';
-import * as UtenteModel from '../models/utente.model';
-import { generateId } from '../utils/generateId';
+import * as ConferenzaModel    from '../models/conferenza.model';
+import { Conferenza }          from '../models/conferenza.model';
+import * as UtenteModel        from '../models/utente.model';
+import * as PubblicazioneModel from '../models/pubblicazione.model';
+import { generateId }          from '../utils/generateId';
 
 // ============================================================
 // TIPO: rappresenta i dati di una conferenza elaborati
@@ -124,26 +125,6 @@ export const getConferenzaById = async (req: Request, res: Response) => {
 };
 
 // ============================================================
-// CONTROLLER: restituisce il profilo dell'utente autenticato
-// ============================================================
-export const getProfilo = async (req: Request, res: Response) => {
-    try {
-        const id_utente = req.user!.id_utente;
-
-        const utente = await UtenteModel.findById(id_utente);
-        if (!utente) {
-            return res.status(404).json({ message: 'Utente non trovato' });
-        }
-
-        res.status(200).json({ utente });
-
-    } catch (error) {
-        console.error('Errore recupero profilo:', error);
-        res.status(500).json({ message: 'Errore interno del server' });
-    }
-};
-
-// ============================================================
 // CONTROLLER: crea una nuova conferenza
 // ============================================================
 export const createConferenza = async (req: Request, res: Response) => {
@@ -252,6 +233,40 @@ export const insertMembroPC = async (req: Request, res: Response) => {
             return res.status(409).json({ message: 'Questo utente è già membro PC di questa conferenza' });
         }
         console.error('Errore aggiunta membro PC:', error);
+        res.status(500).json({ message: 'Errore interno del server' });
+    }
+};
+
+// ============================================================
+// CONTROLLER: restituisce gli articoli pubblicati di una conferenza
+//
+// id_conferenza → path param (:id)
+// id_chair      → letto dal JWT; verificato tramite findByIdForChair
+// ============================================================
+export const getArticoliPubblicati = async (req: Request, res: Response) => {
+    try {
+        const id_utente     = req.user!.id_utente;
+        const id_conferenza = req.params.id as string;
+
+        // 1. Verifica che il richiedente sia chair o co-chair della conferenza
+        const conferenza = await ConferenzaModel.findByIdForChair(id_conferenza, id_utente);
+        if (!conferenza) {
+            return res.status(403).json({ message: 'Accesso non autorizzato o conferenza non trovata.' });
+        }
+
+        // 2. Recupera gli articoli pubblicati per quella conferenza
+        const articoli = await PubblicazioneModel.findPubblicatiByConferenza(id_conferenza);
+
+        res.status(200).json({
+            articoli: articoli.map(a => ({
+                id_articolo: a.id_articolo,
+                titolo:      a.titolo,
+                media_voti:  a.media_voti
+            }))
+        });
+
+    } catch (error) {
+        console.error('Errore recupero articoli pubblicati:', error);
         res.status(500).json({ message: 'Errore interno del server' });
     }
 };

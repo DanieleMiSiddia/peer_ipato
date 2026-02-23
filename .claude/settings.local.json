@@ -40,7 +40,8 @@
       "Bash(\"/c/Users/danie/peer_ipato/public/pages/dashboard/DashboardMembroPC.html\":*)",
       "Bash(npm run build:*)",
       "Bash(\"/c/Users/danie/peer_ipato/public/pages/VisualizzaArticoli.html\":*)",
-      "Bash(npx ng build:*)"
+      "Bash(npx ng build:*)",
+      "Bash(git add:*)"
     ]
   }
 }
