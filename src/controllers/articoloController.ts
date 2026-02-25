@@ -3,11 +3,7 @@ import multer from 'multer';
 import * as ArticoloModel from '../models/articolo.model';
 import { generateId } from '../utils/generateId';
 
-// ============================================================
-// MULTER — memoryStorage: il file arriva come Buffer in
-// req.file.buffer, pronto per essere inserito nel LONGBLOB
-// senza passaggi intermedi su disco.
-// ============================================================
+// memoryStorage: il file arriva come Buffer in req.file.buffer, salvato direttamente nel LONGBLOB
 export const upload = multer({
     storage: multer.memoryStorage(),
     limits:  { fileSize: 16 * 1024 * 1024 }, // 16 MB
@@ -20,23 +16,6 @@ export const upload = multer({
     }
 });
 
-// ============================================================
-// CONTROLLER: sottomissione di un nuovo articolo
-//
-// Riceve da FormData:
-//   - documento    → req.file     (gestito da multer)
-//   - titolo       → req.body.titolo
-//   - topic        → req.body.topic
-//   - id_conferenza → req.body.id_conferenza
-//   - id_autore    → req.user (dal token JWT)
-// ============================================================
-// ============================================================
-// CONTROLLER: lista articoli sottomessi dall'autore autenticato
-//
-// L'id_autore viene letto dal token JWT (req.user) e non dal
-// client, per garantire che ogni autore veda solo i propri articoli.
-// Restituisce: titolo, id_conferenza, topic.
-// ============================================================
 export const getMieiArticoli = async (req: Request, res: Response) => {
     try {
         const id_autore = req.user!.id_utente;
@@ -84,7 +63,6 @@ export const sottomettiArticolo = async (req: Request, res: Response) => {
         const { titolo, topic, id_conferenza } = req.body;
         const file = req.file;
 
-        // Validazione campi obbligatori
         if (!file) {
             return res.status(400).json({ message: 'Documento mancante' });
         }

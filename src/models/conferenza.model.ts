@@ -1,9 +1,6 @@
 import { RowDataPacket, ResultSetHeader } from 'mysql2';
 import pool from '../config/database';
 
-// ============================================================
-// INTERFACCIA: mappa 1:1 tutte le colonne della tabella conferenza
-// ============================================================
 export interface Conferenza {
     id_conferenza:           string;
     data_inizio_conferenza:  Date;
@@ -19,14 +16,6 @@ export interface Conferenza {
     id_editore:              string;
 }
 
-// ============================================================
-// METODI
-// ============================================================
-
-/**
- * Inserisce una nuova conferenza nel database.
- * L'id_conferenza viene generato dal controller prima della chiamata.
- */
 export async function create(conferenza: Conferenza): Promise<void> {
     await pool.execute<ResultSetHeader>(
         `INSERT INTO conferenza (
@@ -57,9 +46,6 @@ export async function create(conferenza: Conferenza): Promise<void> {
     );
 }
 
-/**
- * Inserisce una relazione co-chair tra una conferenza e un chair.
- */
 export async function addCoChair(id_conferenza: string, id_chair: string): Promise<void> {
     await pool.execute<ResultSetHeader>(
         'INSERT INTO co_chair (id_conferenza, id_chair) VALUES (?, ?)',
@@ -67,10 +53,6 @@ export async function addCoChair(id_conferenza: string, id_chair: string): Promi
     );
 }
 
-/**
- * Aggiunge un revisore come membro PC di una conferenza.
- * Inserisce la relazione diretta nella tabella membro_pc (id_conferenza, id_revisore).
- */
 export async function addMembroPC(id_conferenza: string, id_revisore: string): Promise<void> {
     await pool.execute<ResultSetHeader>(
         'INSERT INTO membro_pc (id_conferenza, id_revisore) VALUES (?, ?)',
@@ -78,11 +60,7 @@ export async function addMembroPC(id_conferenza: string, id_revisore: string): P
     );
 }
 
-/**
- * Restituisce i dati completi di una singola conferenza,
- * solo se l'utente è chair principale o co-chair di essa.
- * Restituisce null se la conferenza non esiste o l'utente non è autorizzato.
- */
+// restituisce null se la conferenza non esiste o l'utente non è chair/co-chair
 export async function findByIdForChair(id_conferenza: string, id_utente: string): Promise<Conferenza | null> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT DISTINCT c.*
@@ -94,10 +72,6 @@ export async function findByIdForChair(id_conferenza: string, id_utente: string)
     return rows.length > 0 ? (rows[0] as Conferenza) : null;
 }
 
-/**
- * Restituisce tutte le conferenze in cui il revisore è membro PC
- * (tabella membro_pc).
- */
 export async function findConferenzeByMembroPC(id_revisore: string): Promise<Conferenza[]> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT
@@ -121,11 +95,7 @@ export async function findConferenzeByMembroPC(id_revisore: string): Promise<Con
     return rows as Conferenza[];
 }
 
-/**
- * Restituisce tutte le conferenze presenti nel database.
- * Il filtro per fase (sottomissione, revisione, ecc.) viene
- * applicato a livello di controller.
- */
+// il filtro per fase viene applicato nel controller
 export async function findConferenze(): Promise<Conferenza[]> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT
@@ -146,12 +116,7 @@ export async function findConferenze(): Promise<Conferenza[]> {
     return rows as Conferenza[];
 }
 
-/**
- * Restituisce tutte le conferenze di cui l'utente è chair principale
- * (conferenza.id_chair) oppure co-chair (tabella co_chair).
- * DISTINCT evita duplicati nel caso (improbabile) in cui un utente
- * compaia in entrambe le relazioni per la stessa conferenza.
- */
+// DISTINCT evita duplicati se un utente compare sia come chair che come co-chair
 export async function findConferenzeByChair(id_utente: string): Promise<Conferenza[]> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT DISTINCT
@@ -175,10 +140,6 @@ export async function findConferenzeByChair(id_utente: string): Promise<Conferen
     return rows as Conferenza[];
 }
 
-/**
- * Restituisce tutte le conferenze di cui l'utente è editore.
- * Usata dalla Dashboard Editore per popolare la lista delle conferenze gestite.
- */
 export async function findConferenzeByEditore(id_editore: string): Promise<Conferenza[]> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT
@@ -201,11 +162,7 @@ export async function findConferenzeByEditore(id_editore: string): Promise<Confe
     return rows as Conferenza[];
 }
 
-/**
- * Restituisce il numero massimo di articoli pubblicabili per la conferenza
- * a cui appartiene l'articolo dato. Usato dal controller di pubblicazione
- * per verificare se il limite è già stato raggiunto.
- */
+// recupera numero_articoli della conferenza tramite join — usato per il controllo limite pubblicazioni
 export async function getLimiteByArticolo(id_articolo: string): Promise<number> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT c.numero_articoli
@@ -217,10 +174,6 @@ export async function getLimiteByArticolo(id_articolo: string): Promise<number> 
     return rows.length > 0 ? (rows[0].numero_articoli as number) : 0;
 }
 
-/**
- * Verifica se un revisore è già membro PC di una conferenza.
- * Restituisce true se esiste la relazione in membro_pc, false altrimenti.
- */
 export async function isMembroPC(
     id_conferenza: string,
     id_revisore: string

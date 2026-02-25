@@ -4,23 +4,12 @@ import * as ArticoloModel   from '../models/articolo.model';
 import * as UtenteModel     from '../models/utente.model';
 import * as RevisioneModel  from '../models/revisione.model';
 
-// ============================================================
-// TIPO: dati di una conferenza in fase di revisione
-// restituiti al frontend della DashboardMembroPC
-// ============================================================
 interface ConferenzaMembroPCItem {
     id_conferenza:     string;
     nome:              string;
     data_fine_revisione: Date;
 }
 
-
-
-// ============================================================
-// CONTROLLER: restituisce le conferenze in cui il revisore
-// è membro PC E che sono attualmente in fase di revisione
-// (data_inizio_revisione <= oggi <= data_fine_revisione)
-// ============================================================
 export const getConferenzeInRevisione = async (req: Request, res: Response) => {
     try {
         const id_utente = req.user!.id_utente;
@@ -48,9 +37,6 @@ export const getConferenzeInRevisione = async (req: Request, res: Response) => {
     }
 };
 
-// ============================================================
-// CONTROLLER: restituisce gli articoli sottomessi a una conferenza
-// ============================================================
 export const visualizzaArticoli = async (req: Request, res: Response) => {
     try {
         const id_conferenza = req.params.id as string;
@@ -65,24 +51,11 @@ export const visualizzaArticoli = async (req: Request, res: Response) => {
     }
 };
 
-// ============================================================
-// CONTROLLER: assegna un sotto-revisore a un articolo
-//
-// Body: { email_revisore, id_conferenza }
-// Params: { idArticolo }
-//
-// Flusso:
-//   1. Verifica che esista un revisore con quella email
-//   2. Verifica che non sia già membro PC della conferenza
-//   3. Verifica che l'articolo non sia già assegnato a quel revisore
-//   4. Crea la relazione in e_assegnato
-// ============================================================
 export const assegnaSottorevisore = async (req: Request, res: Response) => {
     try {
         const id_articolo                    = req.params.idArticolo as string;
         const { email_revisore, id_conferenza } = req.body;
 
-        // 1. Verifica esistenza revisore
         const revisore = await UtenteModel.findRevisoreByEmail(email_revisore);
         if (!revisore) {
             return res.status(404).json({
@@ -90,7 +63,7 @@ export const assegnaSottorevisore = async (req: Request, res: Response) => {
             });
         }
 
-        // 2. Verifica che non sia già membro PC di questa conferenza
+        // i membri PC non possono essere assegnati come sotto-revisori della stessa conferenza
         const membroPC = await ConferenzaModel.isMembroPC(id_conferenza, revisore.id_utente);
         if (membroPC) {
             return res.status(409).json({
@@ -98,7 +71,6 @@ export const assegnaSottorevisore = async (req: Request, res: Response) => {
             });
         }
 
-        // 3. Verifica che l'articolo non sia già assegnato a questo revisore
         const giaAssegnato = await RevisioneModel.isGiaAssegnato(id_articolo, revisore.id_utente);
         if (giaAssegnato) {
             return res.status(409).json({
@@ -106,7 +78,6 @@ export const assegnaSottorevisore = async (req: Request, res: Response) => {
             });
         }
 
-        // 4. Crea l'assegnazione
         await RevisioneModel.assegnaRevisore(id_articolo, revisore.id_utente);
 
         res.status(201).json({

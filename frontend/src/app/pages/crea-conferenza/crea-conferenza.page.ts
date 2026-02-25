@@ -46,7 +46,7 @@ export class CreaConferenzaPage implements OnInit {
         if (!this.token) { this.router.navigate(['/auth']); }
     }
 
-    // ── Topic management ──────────────────────────────────────
+    // topic management
     addTopic(event: KeyboardEvent): void {
         if (event.key === 'Enter' && this.topicInput.trim()) {
             event.preventDefault();
@@ -59,7 +59,7 @@ export class CreaConferenzaPage implements OnInit {
         this.selectedTopics = this.selectedTopics.filter(item => item !== t);
     }
 
-    // ── Validazione date ──────────────────────────────────────
+    // validazione date
     private validateDates(): boolean {
         const s = (d: string) => d ? new Date(d) : null;
         const si = s(this.sottInizio), sf = s(this.sottFine);
@@ -79,7 +79,6 @@ export class CreaConferenzaPage implements OnInit {
         return false;
     }
 
-    // ── Submit ────────────────────────────────────────────────
     submit(): void {
         this.errorMessage = '';
 

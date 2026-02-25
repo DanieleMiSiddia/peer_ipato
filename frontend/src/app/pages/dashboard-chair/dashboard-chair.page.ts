@@ -23,7 +23,8 @@ export class DashboardChairPage implements OnInit {
     readonly STATO_CLASSE: Record<string, string> = {
         'Fase Sottomissione': 'dot-yellow',
         'Fase Revisione':     'dot-green',
-        'Fase Pubblicazione': 'dot-blue'
+        'Fase Pubblicazione': 'dot-blue',
+        'Terminata':          'dot-gray'
     };
 
     constructor(

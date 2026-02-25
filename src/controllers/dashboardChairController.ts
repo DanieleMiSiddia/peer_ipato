@@ -5,46 +5,34 @@ import * as UtenteModel        from '../models/utente.model';
 import * as PubblicazioneModel from '../models/pubblicazione.model';
 import { generateId }          from '../utils/generateId';
 
-// ============================================================
-// TIPO: rappresenta i dati di una conferenza elaborati
-// da restituire al frontend della DashboardChair
-// ============================================================
 interface ConferenzaDashboardItem {
     id_conferenza: string;
     nome:          string;
-    stato:         'Fase Sottomissione' | 'Fase Revisione' | 'Fase Pubblicazione';
+    stato:         'Fase Sottomissione' | 'Fase Revisione' | 'Fase Pubblicazione' | 'Terminata';
 }
 
-// ============================================================
-// FUNZIONE HELPER: calcola lo stato della conferenza
-// confrontando la data odierna con le scadenze del DB
-// ============================================================
 function calcolaStato(
     oggi:                    Date,
     dataFineSottomissione:   Date,
-    dataFineRevisione:       Date
+    dataFineRevisione:       Date,
+    dataFineConferenza:      Date
 ): ConferenzaDashboardItem['stato'] {
-
     if (oggi <= dataFineSottomissione) return 'Fase Sottomissione';
     if (oggi <= dataFineRevisione)     return 'Fase Revisione';
-    return 'Fase Pubblicazione';
+    if (oggi <= dataFineConferenza)    return 'Fase Pubblicazione';
+    return 'Terminata';
 }
 
-// ============================================================
-// CONTROLLER: aggiunge un co-chair a una conferenza
-// ============================================================
 export const insertCoChair = async (req: Request, res: Response) => {
     try {
         const id_conferenza = req.params.id as string;
         const { email } = req.body;
 
-        // 1. Verifica che chi fa la richiesta sia chair/co-chair di questa conferenza
         const conferenza = await ConferenzaModel.findByIdForChair(id_conferenza, req.user!.id_utente);
         if (!conferenza) {
             return res.status(403).json({ message: 'Accesso non autorizzato o conferenza non trovata' });
         }
 
-        // 2. Verifica che l'email esista e che il ruolo sia 'chair'
         const utente = await UtenteModel.findRoleByEmail(email);
         if (!utente) {
             return res.status(404).json({ message: 'Nessun utente trovato con questa email' });
@@ -53,13 +41,11 @@ export const insertCoChair = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'L\'utente non ha il ruolo di Chair' });
         }
 
-        // 3. Crea la relazione co-chair
         await ConferenzaModel.addCoChair(id_conferenza, utente.id_utente);
 
         res.status(201).json({ message: 'Co-chair aggiunto con successo' });
 
     } catch (error: any) {
-        // Gestione duplicato: la coppia (id_conferenza, id_chair) esiste già
         if (error.code === 'ER_DUP_ENTRY') {
             return res.status(409).json({ message: 'Questo chair è già co-chair di questa conferenza' });
         }
@@ -68,19 +54,15 @@ export const insertCoChair = async (req: Request, res: Response) => {
     }
 };
 
-// ============================================================
-// CONTROLLER: recupera e restituisce le conferenze del Chair
-// ============================================================
 export const getConferenzeChair = async (req: Request, res: Response) => {
     try {
         const id_utente = req.user!.id_utente;
 
-        // 1. Recupera dal DB tutte le conferenze legate a questo Chair
         const conferenze: Conferenza[] = await ConferenzaModel.findConferenzeByChair(id_utente);
 
-        // 2. Calcola lo stato di ciascuna conferenza e costruisce la risposta
+        // normalizza a mezzanotte per confronto solo sulla data
         const oggi = new Date();
-        oggi.setHours(0, 0, 0, 0); // normalizza a mezzanotte per confronto solo sulla data
+        oggi.setHours(0, 0, 0, 0);
 
         const risultato: ConferenzaDashboardItem[] = conferenze.map((conf) => ({
             id_conferenza: conf.id_conferenza,
@@ -88,11 +70,11 @@ export const getConferenzeChair = async (req: Request, res: Response) => {
             stato:         calcolaStato(
                                oggi,
                                new Date(conf.data_fine_sottomissione),
-                               new Date(conf.data_fine_revisione)
+                               new Date(conf.data_fine_revisione),
+                               new Date(conf.data_fine_conferenza)
                            )
         }));
 
-        // 3. Restituisce l'array al frontend
         res.status(200).json({ conferenze: risultato });
 
     } catch (error) {
@@ -101,15 +83,12 @@ export const getConferenzeChair = async (req: Request, res: Response) => {
     }
 };
 
-// ============================================================
-// CONTROLLER: restituisce i dati di una singola conferenza
-// ============================================================
 export const getConferenzaById = async (req: Request, res: Response) => {
     try {
         const id_utente     = req.user!.id_utente;
         const id_conferenza = req.params.id as string;
 
-        // Cerca la conferenza verificando che l'utente sia chair o co-chair
+        // restituisce null sia se non esiste sia se l'utente non è chair/co-chair
         const conferenza = await ConferenzaModel.findByIdForChair(id_conferenza, id_utente);
 
         if (!conferenza) {
@@ -124,15 +103,10 @@ export const getConferenzaById = async (req: Request, res: Response) => {
     }
 };
 
-// ============================================================
-// CONTROLLER: crea una nuova conferenza
-// ============================================================
 export const createConferenza = async (req: Request, res: Response) => {
     try {
-        // 1. L'id_chair viene letto dal token JWT, non dal body
         const id_chair = req.user!.id_utente;
 
-        // 2. Lettura di tutti i campi inviati dal form
         const {
             nome,
             topic,
@@ -146,7 +120,6 @@ export const createConferenza = async (req: Request, res: Response) => {
             data_fine_sottomissione
         } = req.body;
 
-        // 3. Validazione: tutti i campi sono obbligatori
         if (
             !nome                      ||
             !topic                     ||
@@ -162,17 +135,15 @@ export const createConferenza = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'Tutti i campi sono obbligatori' });
         }
 
-        // 4. Risoluzione email editore → id_editore
+        // risolve email → id e verifica ruolo editore
         const editore = await UtenteModel.findByEmail(editore_email);
         if (!editore || editore.role !== 'editore') {
             return res.status(400).json({ message: 'Editore non trovato o ruolo non corretto' });
         }
         const id_editore = editore.id_utente;
 
-        // 5. Generazione ID univoco per la nuova conferenza (CHAR(6))
         const id_conferenza = generateId(6);
 
-        // 6. Costruzione dell'oggetto e salvataggio nel DB
         await ConferenzaModel.create({
             id_conferenza,
             nome,
@@ -188,7 +159,6 @@ export const createConferenza = async (req: Request, res: Response) => {
             data_fine_sottomissione:   new Date(data_fine_sottomissione)
         });
 
-        // 7. Risposta al frontend con l'ID della conferenza appena creata
         res.status(201).json({ message: 'Conferenza creata con successo', id_conferenza });
 
     } catch (error) {
@@ -197,38 +167,30 @@ export const createConferenza = async (req: Request, res: Response) => {
     }
 };
 
-// ============================================================
-// CONTROLLER: aggiunge un membro PC a una conferenza
-// ============================================================
 export const insertMembroPC = async (req: Request, res: Response) => {
     try {
         const id_conferenza = req.params.id as string;
         const { email } = req.body;
 
-        // 1. Verifica che chi fa la richiesta sia chair/co-chair di questa conferenza
         const conferenza = await ConferenzaModel.findByIdForChair(id_conferenza, req.user!.id_utente);
         if (!conferenza) {
             return res.status(403).json({ message: 'Accesso non autorizzato o conferenza non trovata' });
         }
 
-        // 2. Verifica che l'email esista nel sistema
         const utente = await UtenteModel.findRoleByEmail(email);
         if (!utente) {
             return res.status(404).json({ message: 'Nessun utente trovato con questa email' });
         }
 
-        // 3. Verifica che il ruolo dell'utente sia 'revisore'
         if (utente.role !== 'revisore') {
             return res.status(400).json({ message: 'L\'utente non ha il ruolo di Revisore' });
         }
 
-        // 4. Crea la relazione nella tabella membro_pc
         await ConferenzaModel.addMembroPC(id_conferenza, utente.id_utente);
 
         res.status(201).json({ message: 'Membro PC invitato con successo' });
 
     } catch (error: any) {
-        // Gestione duplicato: la coppia (id_conferenza, id_revisore) esiste già
         if (error.code === 'ER_DUP_ENTRY') {
             return res.status(409).json({ message: 'Questo utente è già membro PC di questa conferenza' });
         }
@@ -237,24 +199,16 @@ export const insertMembroPC = async (req: Request, res: Response) => {
     }
 };
 
-// ============================================================
-// CONTROLLER: restituisce gli articoli pubblicati di una conferenza
-//
-// id_conferenza → path param (:id)
-// id_chair      → letto dal JWT; verificato tramite findByIdForChair
-// ============================================================
 export const getArticoliPubblicati = async (req: Request, res: Response) => {
     try {
         const id_utente     = req.user!.id_utente;
         const id_conferenza = req.params.id as string;
 
-        // 1. Verifica che il richiedente sia chair o co-chair della conferenza
         const conferenza = await ConferenzaModel.findByIdForChair(id_conferenza, id_utente);
         if (!conferenza) {
             return res.status(403).json({ message: 'Accesso non autorizzato o conferenza non trovata.' });
         }
 
-        // 2. Recupera gli articoli pubblicati per quella conferenza
         const articoli = await PubblicazioneModel.findPubblicatiByConferenza(id_conferenza);
 
         res.status(200).json({

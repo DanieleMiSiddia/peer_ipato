@@ -45,7 +45,6 @@ export class SottomissioneArticoloPage implements OnInit {
         return this.titolo.trim() !== '' && this.topic.trim() !== '' && this.selectedFile !== null;
     }
 
-    // ── File input ────────────────────────────────────────────
     openFilePicker(): void {
         this.fileInputRef.nativeElement.click();
     }
@@ -55,7 +54,7 @@ export class SottomissioneArticoloPage implements OnInit {
         if (input.files?.length) this.processFile(input.files[0]);
     }
 
-    // ── Drag & drop ───────────────────────────────────────────
+    // drag & drop
     onDragOver(event: DragEvent): void {
         event.preventDefault();
         this.isDragOver = true;
@@ -72,7 +71,6 @@ export class SottomissioneArticoloPage implements OnInit {
         if (files?.length) this.processFile(files[0]);
     }
 
-    // ── Validazione file ──────────────────────────────────────
     processFile(file: File): void {
         const MAX_SIZE = 16 * 1024 * 1024;
         if (file.type !== 'application/pdf' || file.size > MAX_SIZE) {
@@ -93,7 +91,6 @@ export class SottomissioneArticoloPage implements OnInit {
         return this.selectedFile ? (this.selectedFile.size / (1024 * 1024)).toFixed(1) : '0';
     }
 
-    // ── Invio ─────────────────────────────────────────────────
     submit(): void {
         if (!this.confirmEnabled || this.loading) return;
         this.submitError = '';

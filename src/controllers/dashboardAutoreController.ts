@@ -1,10 +1,7 @@
 import { Request, Response } from 'express';
 import * as ConferenzaModel from '../models/conferenza.model';
 import * as ArticoloModel   from '../models/articolo.model';
-// ============================================================
-// TIPO: dati di una conferenza in fase di sottomissione
-// restituiti al frontend della DashboardAutore
-// ============================================================
+
 interface ConferenzaAutoreItem {
     id_conferenza:          string;
     nome:                   string;
@@ -12,17 +9,6 @@ interface ConferenzaAutoreItem {
     topic:                  string;
 }
 
-// ============================================================
-// CONTROLLER: restituisce le conferenze in fase di sottomissione
-// nelle quali l'autore NON ha ancora sottomesso alcun articolo.
-//
-// Logica:
-// 1. findConferenze()                  → tutte le conferenze nel DB
-// 2. filtro per fase di sottomissione  → data_inizio <= oggi <= data_fine
-// 3. findIdConferenzaByIdAutore()      → id conferenze già frequentate
-// 4. esclude le conferenze già frequentate dalla lista filtrata
-// 5. mappa al tipo ConferenzaAutoreItem e risponde
-// ============================================================
 export const getConferenzeSottomissione = async (req: Request, res: Response) => {
     try {
         const id_utente = req.user!.id_utente;

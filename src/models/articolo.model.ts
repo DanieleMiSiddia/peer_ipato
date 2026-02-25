@@ -1,10 +1,6 @@
 import { RowDataPacket, ResultSetHeader } from 'mysql2';
 import pool from '../config/database';
 
-// ============================================================
-// INTERFACCE
-// ============================================================
-
 export interface Articolo {
     id_articolo:   string;
     titolo:        string;
@@ -16,21 +12,10 @@ export interface Articolo {
     id_conferenza: string;
 }
 
-/**
- * Versione senza il campo documento (LONGBLOB) — usata per le liste.
- * Evita di trasferire file pesanti quando non servono.
- */
+// senza LONGBLOB — usata per le query di lista
 export type ArticoloSenzaDocumento = Omit<Articolo, 'documento'>;
 
-// ============================================================
-// METODI
-// ============================================================
-
-/**
- * Inserisce un nuovo articolo nel database.
- * L'id_articolo viene generato dal controller prima della chiamata.
- * stato è sempre 'SOTTOMESSO' (hardcoded), media_voti inizia a NULL.
- */
+// stato hardcoded a 'SOTTOMESSO', media_voti inizia a NULL
 export async function create(articolo: Omit<Articolo, 'media_voti' | 'stato'>): Promise<void> {
     await pool.execute<ResultSetHeader>(
         `INSERT INTO articolo
@@ -47,10 +32,6 @@ export async function create(articolo: Omit<Articolo, 'media_voti' | 'stato'>): 
     );
 }
 
-/**
- * Aggiorna il campo media_voti di un articolo con il valore calcolato.
- * Viene chiamato ogni volta che una nuova revisione viene creata.
- */
 export async function updateMediaVoti(id_articolo: string, media: number): Promise<void> {
     await pool.execute<ResultSetHeader>(
         'UPDATE articolo SET media_voti = ? WHERE id_articolo = ?',
@@ -58,11 +39,7 @@ export async function updateMediaVoti(id_articolo: string, media: number): Promi
     );
 }
 
-/**
- * Elimina un articolo solo se appartiene all'autore specificato.
- * Restituisce true se la riga è stata eliminata, false se non esisteva
- * o se id_autore non corrisponde (ownership check in DB).
- */
+// ownership check nella WHERE: restituisce true solo se l'articolo appartiene all'autore
 export async function deleteById(id_articolo: string, id_autore: string): Promise<boolean> {
     const [result] = await pool.execute<ResultSetHeader>(
         'DELETE FROM articolo WHERE id_articolo = ? AND id_autore = ?',
@@ -71,11 +48,6 @@ export async function deleteById(id_articolo: string, id_autore: string): Promis
     return result.affectedRows > 0;
 }
 
-/**
- * Restituisce solo il documento (LONGBLOB) di un articolo tramite il suo ID.
- * Usato quando l'utente vuole scaricare/visualizzare il file caricato.
- * Restituisce null se l'articolo non esiste.
- */
 export async function getDocumentoById(id_articolo: string): Promise<Buffer | null> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         'SELECT documento FROM articolo WHERE id_articolo = ?',
@@ -84,10 +56,6 @@ export async function getDocumentoById(id_articolo: string): Promise<Buffer | nu
     return rows.length > 0 ? (rows[0].documento as Buffer) : null;
 }
 
-/**
- * Restituisce la lista di id_conferenza distinti in cui un autore
- * ha già sottomesso almeno un articolo.
- */
 export async function findIdConferenzaByIdAutore(id_autore: string): Promise<string[]> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT DISTINCT id_conferenza
@@ -98,10 +66,6 @@ export async function findIdConferenzaByIdAutore(id_autore: string): Promise<str
     return rows.map(r => r.id_conferenza as string);
 }
 
-/**
- * Restituisce tutti gli articoli sottomessi da un autore,
- * escludendo il campo documento (LONGBLOB) per leggerezza.
- */
 export async function findByIdAutore(id_autore: string): Promise<ArticoloSenzaDocumento[]> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT id_articolo, titolo, stato, topic, media_voti, id_autore, id_conferenza
@@ -112,10 +76,6 @@ export async function findByIdAutore(id_autore: string): Promise<ArticoloSenzaDo
     return rows as ArticoloSenzaDocumento[];
 }
 
-/**
- * Restituisce tutti gli articoli sottomessi a una conferenza,
- * escludendo il campo documento (LONGBLOB) per leggerezza.
- */
 export async function findByConferenza(id_conferenza: string): Promise<ArticoloSenzaDocumento[]> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT id_articolo, titolo, stato, topic, media_voti, id_autore, id_conferenza
@@ -126,18 +86,13 @@ export async function findByConferenza(id_conferenza: string): Promise<ArticoloS
     return rows as ArticoloSenzaDocumento[];
 }
 
-/**
- * Restituisce tutti gli articoli di una conferenza con solo i campi
- * necessari all'editore: id, titolo e media voti.
- * Nessun filtro sullo stato — l'esclusione degli articoli già pubblicati
- * avviene nel controller tramite isPubblicato().
- */
 export interface ArticoloPerEditore {
     id_articolo: string;
     titolo:      string;
     media_voti:  number;
 }
 
+// esclude il filtro sullo stato: è il controller che scarta gli articoli già pubblicati
 export async function findByConferenzaPerEditore(id_conferenza: string): Promise<ArticoloPerEditore[]> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT id_articolo, titolo, media_voti

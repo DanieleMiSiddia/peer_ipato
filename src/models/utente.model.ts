@@ -1,7 +1,7 @@
 import { RowDataPacket, ResultSetHeader } from 'mysql2';
 import pool from '../config/database';
 
-// Interfaccia completa (uso interno: login, scrittura DB)
+// interfaccia completa — usata internamente per login e scrittura DB
 export interface Utente {
     id_utente: string;
     nome: string;
@@ -13,7 +13,7 @@ export interface Utente {
     ultimo_logout: Date | null;
 }
 
-// Interfaccia sicura (uso esterno: profilo, sessione, risposte API)
+// senza password — usata per risposte API e sessione
 export type UtenteSicuro = Omit<Utente, 'password'>;
 
 export async function findByEmail(email: string): Promise<Utente | null> {
@@ -44,7 +44,7 @@ export async function create(utente: Utente): Promise<void> {
 
 const VALID_ROLES = ['autore', 'revisore', 'chair', 'editore'] as const;
 
-// Inserisce utente e tabella di specializzazione in un'unica transazione atomica
+// inserisce utente e tabella di specializzazione in un'unica transazione atomica
 export async function createWithSpecialization(utente: Utente): Promise<void> {
     if (!(VALID_ROLES as readonly string[]).includes(utente.role)) {
         throw new Error(`Ruolo non valido: ${utente.role}`);
@@ -128,10 +128,7 @@ export async function logout(id_utente: string): Promise<void> {
     );
 }
 
-/**
- * Cerca un utente per email verificando che abbia ruolo 'revisore'.
- * Restituisce id_utente, nome, cognome se trovato, null altrimenti.
- */
+// cerca revisore per email — restituisce id, nome, cognome o null
 export async function findRevisoreByEmail(
     email: string
 ): Promise<{ id_utente: string; nome: string; cognome: string } | null> {

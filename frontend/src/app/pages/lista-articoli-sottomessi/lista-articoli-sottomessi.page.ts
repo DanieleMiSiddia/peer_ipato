@@ -65,7 +65,6 @@ export class ListaArticoliSottomessiPage implements OnInit {
         return STATO_BADGE[stato] ?? { label: stato, classe: 'badge-yellow' };
     }
 
-    // ── Overlay conferma eliminazione ─────────────────────────
     chiediConfermaElimina(art: ArticoloItem): void {
         this.errorMsg            = '';
         this.articoloDaEliminare = art;

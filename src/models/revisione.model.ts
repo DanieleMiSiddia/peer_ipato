@@ -1,10 +1,6 @@
 import { RowDataPacket, ResultSetHeader } from 'mysql2';
 import pool from '../config/database';
 
-// ============================================================
-// INTERFACCE
-// ============================================================
-
 export interface Revisione {
     id_review:       string;
     voto_competenza: number;
@@ -29,15 +25,6 @@ export interface ArticoloAssegnato {
     sorgente:            string;
 }
 
-// ============================================================
-// METODI
-// ============================================================
-
-/**
- * Restituisce tutti gli articoli assegnati a un revisore tramite e_assegnato.
- * Data scadenza = data_fine_revisione della conferenza.
- * Esclude il campo documento (LONGBLOB) per leggerezza.
- */
 export async function findArticoliAssegnati(id_revisore: string): Promise<ArticoloAssegnato[]> {
     const [rows] = await pool.execute<RowDataPacket[]>(
         `SELECT a.id_articolo, a.titolo, a.stato, a.topic,
@@ -54,10 +41,6 @@ export async function findArticoliAssegnati(id_revisore: string): Promise<Artico
     return rows as ArticoloAssegnato[];
 }
 
-/**
- * Inserisce una nuova revisione nel database.
- * L'id_review viene generato dal controller prima della chiamata.
- */
 export async function create(revisione: Revisione): Promise<void> {
     await pool.execute<ResultSetHeader>(
         `INSERT INTO revisione
@@ -76,10 +59,6 @@ export async function create(revisione: Revisione): Promise<void> {
     );
 }
 
-/**
- * Verifica se un revisore ha già scritto una revisione per un determinato articolo.
- * Restituisce true se esiste già una riga in revisione, false altrimenti.
- */
 export async function isGiaRevisionato(
     id_articolo: string,
     id_revisore: string
@@ -92,10 +71,6 @@ export async function isGiaRevisionato(
     return rows.length > 0;
 }
 
-/**
- * Verifica se un articolo è già assegnato a un determinato revisore.
- * Restituisce true se esiste già la relazione in e_assegnato, false altrimenti.
- */
 export async function isGiaAssegnato(
     id_articolo: string,
     id_revisore: string
@@ -108,11 +83,6 @@ export async function isGiaAssegnato(
     return rows.length > 0;
 }
 
-/**
- * Restituisce id_review, valutazione, voto_competenza e commento
- * di tutte le revisioni associate a un articolo.
- * Usata per la visualizzazione delle revisioni da parte dell'editore.
- */
 export interface RevisionePerEditore {
     id_review:       string;
     valutazione:     number;
@@ -130,10 +100,6 @@ export async function findByArticolo(id_articolo: string): Promise<RevisionePerE
     return rows as RevisionePerEditore[];
 }
 
-/**
- * Restituisce valutazione e voto_competenza di tutte le revisioni
- * associate a un articolo. Usato per il calcolo della media ponderata.
- */
 export async function getValutazioniByArticolo(
     id_articolo: string
 ): Promise<{ valutazione: number; voto_competenza: number }[]> {
@@ -146,12 +112,7 @@ export async function getValutazioniByArticolo(
     return rows as { valutazione: number; voto_competenza: number }[];
 }
 
-/**
- * Verifica se un revisore è autorizzato a scaricare il documento di un articolo.
- * L'accesso è consentito se almeno una delle seguenti condizioni è vera:
- *   1. L'articolo è assegnato al revisore tramite e_assegnato
- *   2. Il revisore è membro PC della conferenza a cui appartiene l'articolo
- */
+// accesso consentito se assegnato direttamente all'articolo O membro PC della conferenza
 export async function canAccessDocumento(
     id_articolo: string,
     id_revisore: string
@@ -169,10 +130,6 @@ export async function canAccessDocumento(
     return rows.length > 0;
 }
 
-/**
- * Inserisce la relazione di assegnazione tra un revisore e un articolo.
- * Il metodo_assegnazione è sempre 'MANUALE' per le assegnazioni da parte del Membro PC.
- */
 export async function assegnaRevisore(
     id_articolo: string,
     id_revisore: string
